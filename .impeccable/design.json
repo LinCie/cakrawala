@@ -1,0 +1,462 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-05-09T01:51:48+07:00",
+  "title": "Design System: CRN Advisory Systems",
+  "extensions": {
+    "colorMeta": {
+      "brand-50": {
+        "role": "neutral",
+        "displayName": "Corporate Mist",
+        "canonical": "oklch(0.97 0.01 245)",
+        "tonalRamp": [
+          "#071A26",
+          "#0B2A3D",
+          "#10384F",
+          "#174B68",
+          "#2F6F8F",
+          "#C7DBE7",
+          "#E2ECF3",
+          "#F3F7FA"
+        ]
+      },
+      "brand-100": {
+        "role": "neutral",
+        "displayName": "Low-Risk Panel",
+        "canonical": "oklch(0.93 0.02 245)",
+        "tonalRamp": [
+          "#071A26",
+          "#0B2A3D",
+          "#10384F",
+          "#174B68",
+          "#2F6F8F",
+          "#C7DBE7",
+          "#E2ECF3",
+          "#F3F7FA"
+        ]
+      },
+      "brand-500": {
+        "role": "primary",
+        "displayName": "Technical Blue",
+        "canonical": "oklch(0.52 0.09 230)",
+        "tonalRamp": [
+          "#071A26",
+          "#0B2A3D",
+          "#10384F",
+          "#174B68",
+          "#2F6F8F",
+          "#C7DBE7",
+          "#E2ECF3",
+          "#F3F7FA"
+        ]
+      },
+      "brand-700": {
+        "role": "primary",
+        "displayName": "Command Navy",
+        "canonical": "oklch(0.39 0.08 235)",
+        "tonalRamp": [
+          "#071A26",
+          "#0B2A3D",
+          "#10384F",
+          "#174B68",
+          "#2F6F8F",
+          "#C7DBE7",
+          "#E2ECF3",
+          "#F3F7FA"
+        ]
+      },
+      "brand-900": {
+        "role": "primary",
+        "displayName": "Boardroom Ink",
+        "canonical": "oklch(0.25 0.06 240)",
+        "tonalRamp": [
+          "#071A26",
+          "#0B2A3D",
+          "#10384F",
+          "#174B68",
+          "#2F6F8F",
+          "#C7DBE7",
+          "#E2ECF3",
+          "#F3F7FA"
+        ]
+      },
+      "brand-950": {
+        "role": "primary",
+        "displayName": "Midnight Control",
+        "canonical": "oklch(0.18 0.05 240)",
+        "tonalRamp": [
+          "#071A26",
+          "#0B2A3D",
+          "#10384F",
+          "#174B68",
+          "#2F6F8F",
+          "#C7DBE7",
+          "#E2ECF3",
+          "#F3F7FA"
+        ]
+      },
+      "teal-500": {
+        "role": "secondary",
+        "displayName": "Governance Teal",
+        "canonical": "oklch(0.57 0.10 185)",
+        "tonalRamp": [
+          "#083634",
+          "#0B4B48",
+          "#0F625E",
+          "#16756F",
+          "#1E8A83",
+          "#59AAA4",
+          "#D2F0ED",
+          "#EDF9F7"
+        ]
+      },
+      "teal-700": {
+        "role": "secondary",
+        "displayName": "Deep Teal Control",
+        "canonical": "oklch(0.43 0.08 185)",
+        "tonalRamp": [
+          "#083634",
+          "#0B4B48",
+          "#0F625E",
+          "#16756F",
+          "#1E8A83",
+          "#59AAA4",
+          "#D2F0ED",
+          "#EDF9F7"
+        ]
+      },
+      "accent-500": {
+        "role": "tertiary",
+        "displayName": "Executive Brass",
+        "canonical": "oklch(0.68 0.11 80)",
+        "tonalRamp": [
+          "#4A3211",
+          "#6A4D1E",
+          "#8B6827",
+          "#A78035",
+          "#C49A45",
+          "#D9B56B",
+          "#F4EAD2",
+          "#FBF5E9"
+        ]
+      },
+      "accent-700": {
+        "role": "tertiary",
+        "displayName": "Aged Brass",
+        "canonical": "oklch(0.48 0.09 80)",
+        "tonalRamp": [
+          "#4A3211",
+          "#6A4D1E",
+          "#8B6827",
+          "#A78035",
+          "#C49A45",
+          "#D9B56B",
+          "#F4EAD2",
+          "#FBF5E9"
+        ]
+      },
+      "neutral-50": {
+        "role": "neutral",
+        "displayName": "Cloud Paper",
+        "canonical": "#F8FAFC",
+        "tonalRamp": [
+          "#020617",
+          "#0F172A",
+          "#1E293B",
+          "#334155",
+          "#475569",
+          "#94A3B8",
+          "#E2E8F0",
+          "#F8FAFC"
+        ]
+      },
+      "neutral-100": {
+        "role": "neutral",
+        "displayName": "Quiet Panel",
+        "canonical": "#F1F5F9",
+        "tonalRamp": [
+          "#020617",
+          "#0F172A",
+          "#1E293B",
+          "#334155",
+          "#475569",
+          "#94A3B8",
+          "#E2E8F0",
+          "#F8FAFC"
+        ]
+      },
+      "neutral-200": {
+        "role": "neutral",
+        "displayName": "Control Line",
+        "canonical": "#E2E8F0",
+        "tonalRamp": [
+          "#020617",
+          "#0F172A",
+          "#1E293B",
+          "#334155",
+          "#475569",
+          "#94A3B8",
+          "#E2E8F0",
+          "#F8FAFC"
+        ]
+      },
+      "neutral-500": {
+        "role": "neutral",
+        "displayName": "Working Slate",
+        "canonical": "#64748B",
+        "tonalRamp": [
+          "#020617",
+          "#0F172A",
+          "#1E293B",
+          "#334155",
+          "#475569",
+          "#94A3B8",
+          "#E2E8F0",
+          "#F8FAFC"
+        ]
+      },
+      "neutral-700": {
+        "role": "neutral",
+        "displayName": "Executive Slate",
+        "canonical": "#334155",
+        "tonalRamp": [
+          "#020617",
+          "#0F172A",
+          "#1E293B",
+          "#334155",
+          "#475569",
+          "#94A3B8",
+          "#E2E8F0",
+          "#F8FAFC"
+        ]
+      },
+      "neutral-900": {
+        "role": "neutral",
+        "displayName": "Main Ink",
+        "canonical": "#0F172A",
+        "tonalRamp": [
+          "#020617",
+          "#0F172A",
+          "#1E293B",
+          "#334155",
+          "#475569",
+          "#94A3B8",
+          "#E2E8F0",
+          "#F8FAFC"
+        ]
+      },
+      "neutral-950": {
+        "role": "neutral",
+        "displayName": "Deep Night",
+        "canonical": "#020617",
+        "tonalRamp": [
+          "#020617",
+          "#0F172A",
+          "#1E293B",
+          "#334155",
+          "#475569",
+          "#94A3B8",
+          "#E2E8F0",
+          "#F8FAFC"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero headlines and major brand framing."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Page titles and section anchors for executive scanning."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Service cards, module headings, and dense summaries."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Primary reading layer for governance, procurement, and bilingual content."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Eyebrows, metadata, and compact trust markers."
+      },
+      "data": {
+        "displayName": "Data",
+        "purpose": "Quantitative proof and maturity metrics."
+      }
+    },
+    "shadows": [
+      {
+        "name": "micro-trace",
+        "value": "0 1px 2px rgb(15 23 42 / 0.05)",
+        "purpose": "Low-stakes controls and badges."
+      },
+      {
+        "name": "proof-card",
+        "value": "0 18px 45px rgb(15 23 42 / 0.08)",
+        "purpose": "Standard cards and proof modules."
+      },
+      {
+        "name": "elevated-panel",
+        "value": "0 24px 70px rgb(15 23 42 / 0.12)",
+        "purpose": "Hero-side diagrams and major overlays."
+      },
+      {
+        "name": "action-shadow",
+        "value": "0 10px 24px rgb(23 75 104 / 0.22)",
+        "purpose": "Primary conversion buttons."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-standard",
+        "value": "cubic-bezier(0.2, 0, 0, 1)",
+        "purpose": "Default hover, focus, and reveal easing."
+      },
+      {
+        "name": "ease-emphasized",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Navigation and stronger reveal emphasis."
+      },
+      {
+        "name": "duration-fast",
+        "value": "160ms",
+        "purpose": "Buttons and hover transitions."
+      },
+      {
+        "name": "duration-normal",
+        "value": "280ms",
+        "purpose": "Standard component transitions."
+      },
+      {
+        "name": "duration-slow",
+        "value": "520ms",
+        "purpose": "Section reveals and optional proof animation."
+      }
+    ],
+    "breakpoints": [
+      { "name": "xs", "value": "30rem" },
+      { "name": "sm", "value": "40rem" },
+      { "name": "md", "value": "48rem" },
+      { "name": "lg", "value": "64rem" },
+      { "name": "xl", "value": "80rem" },
+      { "name": "2xl", "value": "96rem" },
+      { "name": "3xl", "value": "120rem" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Main enterprise conversion action for briefing requests and high-intent contact points.",
+      "html": "<button class=\"ds-btn-primary\">Schedule an Executive Briefing</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; border: none; border-radius: 999px; background: #174B68; color: #FFFFFF; padding: 0.75rem 1.5rem; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 0.875rem; font-weight: 600; line-height: 1; box-shadow: 0 10px 24px rgb(23 75 104 / 0.22); cursor: pointer; transition: background-color 160ms cubic-bezier(0.2, 0, 0, 1), transform 160ms cubic-bezier(0.2, 0, 0, 1), box-shadow 160ms cubic-bezier(0.2, 0, 0, 1); } .ds-btn-primary:hover { background: #0B2A3D; transform: translateY(-1px); } .ds-btn-primary:focus-visible { outline: 2px solid #174B68; outline-offset: 2px; } .ds-btn-primary:active { transform: translateY(0); }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Alternate conversion path for capability decks and lower-pressure navigation actions.",
+      "html": "<button class=\"ds-btn-secondary\">Request Capability Deck</button>",
+      "css": ".ds-btn-secondary { display: inline-flex; align-items: center; justify-content: center; border: 1px solid #174B68; border-radius: 999px; background: #FFFFFF; color: #0B2A3D; padding: 0.75rem 1.5rem; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 0.875rem; font-weight: 600; line-height: 1; cursor: pointer; transition: background-color 160ms cubic-bezier(0.2, 0, 0, 1), border-color 160ms cubic-bezier(0.2, 0, 0, 1), color 160ms cubic-bezier(0.2, 0, 0, 1); } .ds-btn-secondary:hover { background: #F3F7FA; } .ds-btn-secondary:focus-visible { outline: 2px solid #174B68; outline-offset: 2px; } .ds-btn-secondary:active { border-color: #0B2A3D; }"
+    },
+    {
+      "name": "Service Card",
+      "kind": "card",
+      "refersTo": "card-service",
+      "description": "Core service or proof module used to explain capabilities with sober lift and precise hierarchy.",
+      "html": "<article class=\"ds-card-service\"><div class=\"ds-card-icon\" aria-hidden=\"true\"><svg viewBox=\"0 0 24 24\" fill=\"none\"><path d=\"M5 12h14M12 5v14\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"/></svg></div><h3>AI Governance and Responsible Automation</h3><p>Establish the policies, controls, approval workflows, and monitoring required to scale AI responsibly.</p><a href=\"#\">Explore service</a></article>",
+      "css": ".ds-card-service { display: grid; gap: 0.75rem; border: 1px solid #E2E8F0; border-radius: 1.25rem; background: #FFFFFF; color: #0F172A; padding: 1.5rem; box-shadow: 0 18px 45px rgb(15 23 42 / 0.08); transition: transform 160ms cubic-bezier(0.2, 0, 0, 1), box-shadow 160ms cubic-bezier(0.2, 0, 0, 1), border-color 160ms cubic-bezier(0.2, 0, 0, 1); } .ds-card-service:hover { transform: translateY(-4px); box-shadow: 0 24px 70px rgb(15 23 42 / 0.12); border-color: #C7DBE7; } .ds-card-service:focus-within { outline: 2px solid #174B68; outline-offset: 2px; } .ds-card-service h3 { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 1.25rem; line-height: 1.35; font-weight: 600; letter-spacing: -0.01em; color: #0B2A3D; } .ds-card-service p { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 0.875rem; line-height: 1.6; color: #475569; } .ds-card-service a { width: fit-content; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 0.875rem; font-weight: 600; color: #174B68; text-decoration: none; transition: color 160ms cubic-bezier(0.2, 0, 0, 1); } .ds-card-service a:hover { color: #0B2A3D; } .ds-card-service a:focus-visible { outline: 2px solid #174B68; outline-offset: 4px; } .ds-card-icon { display: inline-flex; align-items: center; justify-content: center; width: 2.75rem; height: 2.75rem; border-radius: 0.875rem; background: #F3F7FA; color: #174B68; box-shadow: inset 0 0 0 1px #E2ECF3; } .ds-card-icon svg { width: 1.25rem; height: 1.25rem; }"
+    },
+    {
+      "name": "Enterprise Input",
+      "kind": "input",
+      "refersTo": "field-default",
+      "description": "Default enterprise form field with explicit labeling, strong focus treatment, and visible error affordance.",
+      "html": "<label class=\"ds-field\"><span>Company email</span><input type=\"email\" placeholder=\"name@company.com\" /><small>Use your business email so our advisory team can qualify the request.</small></label>",
+      "css": ".ds-field { display: grid; gap: 0.5rem; font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #0F172A; } .ds-field span { font-size: 0.875rem; font-weight: 500; color: #1E293B; } .ds-field input { width: 100%; border: 1px solid #CBD5E1; border-radius: 0.75rem; background: #FFFFFF; color: #0F172A; padding: 0.75rem 1rem; font-size: 1rem; line-height: 1.7; box-shadow: 0 1px 2px rgb(15 23 42 / 0.05); outline: none; transition: border-color 160ms cubic-bezier(0.2, 0, 0, 1), box-shadow 160ms cubic-bezier(0.2, 0, 0, 1); } .ds-field input::placeholder { color: #94A3B8; } .ds-field input:hover { border-color: #94A3B8; } .ds-field input:focus-visible { border-color: #2F6F8F; box-shadow: 0 0 0 4px rgb(47 111 143 / 0.15); } .ds-field small { font-size: 0.75rem; line-height: 1.45; color: #64748B; }"
+    },
+    {
+      "name": "Trust Badge",
+      "kind": "chip",
+      "refersTo": "badge-trust",
+      "description": "Compact evidence marker for compliance posture, readiness statements, and trust center summaries.",
+      "html": "<div class=\"ds-trust-badge\"><span class=\"ds-trust-dot\" aria-hidden=\"true\"></span>PDP readiness advisory</div>",
+      "css": ".ds-trust-badge { display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid #E2E8F0; border-radius: 999px; background: #FFFFFF; color: #334155; padding: 0.375rem 0.75rem; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 0.75rem; font-weight: 500; line-height: 1.45; letter-spacing: 0.02em; box-shadow: 0 1px 2px rgb(15 23 42 / 0.05); } .ds-trust-dot { width: 0.5rem; height: 0.5rem; border-radius: 999px; background: #16835B; }"
+    },
+    {
+      "name": "Header Navigation",
+      "kind": "nav",
+      "refersTo": "button-primary",
+      "description": "Sticky enterprise header with quiet navigation, transparent backdrop, and a smaller CTA.",
+      "html": "<header class=\"ds-header\"><a class=\"ds-brand\" href=\"#\">CRN Advisory Systems</a><nav aria-label=\"Primary\"><a href=\"#\">Solutions</a><a href=\"#\">Industries</a><a href=\"#\">Trust Center</a></nav><a class=\"ds-header-cta\" href=\"#\">Schedule Briefing</a></header>",
+      "css": ".ds-header { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.5rem; padding: 1rem 1.5rem; border: 1px solid rgb(226 232 240 / 0.7); border-radius: 1.25rem; background: rgb(255 255 255 / 0.85); backdrop-filter: blur(20px); } .ds-brand { color: #0B2A3D; font-family: Satoshi, Inter, ui-sans-serif, system-ui, sans-serif; font-size: 1.125rem; font-weight: 600; letter-spacing: -0.02em; text-decoration: none; } .ds-header nav { display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center; } .ds-header nav a { color: #334155; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 0.875rem; font-weight: 500; text-decoration: none; transition: color 160ms cubic-bezier(0.2, 0, 0, 1); } .ds-header nav a:hover { color: #0B2A3D; } .ds-header nav a:focus-visible, .ds-brand:focus-visible, .ds-header-cta:focus-visible { outline: 2px solid #174B68; outline-offset: 4px; } .ds-header-cta { display: inline-flex; align-items: center; justify-content: center; border-radius: 999px; background: #174B68; color: #FFFFFF; padding: 0.625rem 1.25rem; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 0.875rem; font-weight: 600; text-decoration: none; box-shadow: 0 10px 24px rgb(23 75 104 / 0.22); transition: background-color 160ms cubic-bezier(0.2, 0, 0, 1); } .ds-header-cta:hover { background: #0B2A3D; } @media (max-width: 720px) { .ds-header { grid-template-columns: 1fr; justify-items: start; } .ds-header nav { justify-content: start; gap: 0.875rem 1rem; } }"
+    },
+    {
+      "name": "Data Proof Card",
+      "kind": "custom",
+      "refersTo": "card-service",
+      "description": "Quantitative evidence block for maturity scores, operational metrics, and case-study proof.",
+      "html": "<div class=\"ds-proof-card\"><p class=\"ds-proof-label\">Maturity score</p><p class=\"ds-proof-value\">72%</p><p class=\"ds-proof-body\">Controls implemented across priority domains.</p></div>",
+      "css": ".ds-proof-card { display: grid; gap: 0.5rem; border: 1px solid #E2E8F0; border-radius: 1.25rem; background: #FFFFFF; color: #0F172A; padding: 1.5rem; box-shadow: 0 18px 45px rgb(15 23 42 / 0.08); } .ds-proof-label { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 0.75rem; font-weight: 500; line-height: 1.45; letter-spacing: 0.04em; text-transform: uppercase; color: #64748B; } .ds-proof-value { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 2.25rem; font-weight: 650; line-height: 1; letter-spacing: -0.03em; color: #0B2A3D; font-variant-numeric: tabular-nums; } .ds-proof-body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 0.875rem; line-height: 1.6; color: #475569; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Boardroom Assurance Packet",
+    "overview": "CRN Advisory Systems should feel like the briefing deck and diligence packet that lands on an executive committee table before a regulated program is approved. The design is premium, but the premium signal comes from discipline, not spectacle. Structure, spacing, contrast, and language should reduce perceived risk before they ask for attention.\n\nThis is a light-first enterprise system anchored by dark navy control surfaces. White and cool slate carry the reading experience; navy concentrates authority in headers, heroes, and primary conversion moments; muted gold and restrained teal operate as evidence markers rather than decorative flourish. The overall atmosphere is analytical, credible, and board-ready, with enough technical sharpness to reassure CIO, CISO, and procurement audiences.\n\nThe system explicitly rejects the posture of a generic digital agency, a hype-driven AI startup, and a consumer-tech marketing site. It also rejects vague transformation theater, flashy novelty, and empty premium cues that do not reduce perceived risk. Every layout, token, and component should look plausible for a focused 185-person Indonesian enterprise advisory firm, not for a global consultancy playing at impossible scale.",
+    "keyCharacteristics": [
+      "Controlled contrast with light reading surfaces and navy authority bands",
+      "Evidence-led hierarchy built for scanning, proof, and next-step clarity",
+      "Premium restraint, where gold and teal are signals, not decoration",
+      "Bilingual enterprise readability with generous body leading and tight headline tracking",
+      "Motion that supports comprehension, never performance for its own sake"
+    ],
+    "rules": [
+      {
+        "name": "The Muted Gold Rule",
+        "body": "Gold is a signal, not a surface. Use #C49A45 and #8B6827 in small amounts for emphasis, never as large promotional fills.",
+        "section": "colors"
+      },
+      {
+        "name": "The Trust-First Rule",
+        "body": "Primary CTA states use #174B68 at rest and #0B2A3D on hover. When a surface asks for action, the navy scale carries the weight.",
+        "section": "colors"
+      },
+      {
+        "name": "The Board Packet Rule",
+        "body": "Headlines may tighten tracking, but paragraphs must breathe. Dense enterprise content becomes credible only when body copy keeps generous leading and a disciplined line length.",
+        "section": "typography"
+      },
+      {
+        "name": "The Bilingual Breathing Rule",
+        "body": "Bahasa paragraphs should default to relaxed leading. Do not compress long Indonesian copy to chase a tighter page.",
+        "section": "typography"
+      },
+      {
+        "name": "The Proof-First Lift Rule",
+        "body": "If a surface looks lifted, it must earn that privilege through action or evidence. Decorative floating cards are prohibited.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do use #F8FAFC or #FFFFFF for default reading surfaces, and reserve #071A26 for high-trust sectional anchors such as heroes and footers.",
+      "Do keep primary CTA states on the navy scale: #174B68 at rest, #0B2A3D on hover, with a visible 2px focus outline.",
+      "Do keep body measure near 68ch to 72ch, with relaxed leading for long governance, procurement, and Bahasa content.",
+      "Do use muted gold (#C49A45) for compact highlights, eyebrow labels, and selective proof emphasis, not for large background blocks.",
+      "Do use motion in short, controlled durations: 160ms for buttons and hover states, 420ms to 520ms for reveal patterns, always with reduced-motion fallbacks.",
+      "Do keep proof modules evidence-driven: direct labels, tabular numerals, light gridlines, and text alternatives for charts."
+    ],
+    "donts": [
+      "Don't make this look like a generic digital agency.",
+      "Don't make this feel like a hype-driven AI startup.",
+      "Don't drift into a consumer-tech marketing site posture.",
+      "Don't use vague transformation language, gimmicky motion, flashy novelty, or empty premium cues that do not reduce perceived risk.",
+      "Don't imitate the scale or visual posture of a global consultancy beyond what a fictional 185-person firm could credibly support.",
+      "Don't copy any real competitor directly.",
+      "Don't put gradients inside the logo, add drop shadows to the logo, stretch it, or place it on low-contrast or busy photo backgrounds.",
+      "Don't use color alone to communicate error, risk, or data interpretation."
+    ]
+  }
+}

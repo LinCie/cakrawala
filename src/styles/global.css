@@ -1,0 +1,183 @@
+@import "tailwindcss";
+
+@source "../pages";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Satoshi", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --text-display: clamp(3.5rem, 7vw, 6.5rem);
+  --text-h1: clamp(2.75rem, 5vw, 4.75rem);
+  --text-h2: clamp(2rem, 3.5vw, 3.25rem);
+  --text-h3: clamp(1.5rem, 2.2vw, 2rem);
+  --text-h4: 1.25rem;
+  --text-body-lg: 1.125rem;
+  --text-body: 1rem;
+  --text-body-sm: 0.875rem;
+  --text-caption: 0.75rem;
+  --text-data: 2.25rem;
+
+  --leading-tight: 1.05;
+  --leading-normal: 1.6;
+  --leading-relaxed: 1.75;
+
+  --tracking-tight: -0.03em;
+  --tracking-display: -0.045em;
+  --tracking-wide: 0.04em;
+
+  --color-brand-50: #f3f7fa;
+  --color-brand-100: #e2ecf3;
+  --color-brand-200: #c7dbe7;
+  --color-brand-500: #2f6f8f;
+  --color-brand-700: #174b68;
+  --color-brand-800: #10384f;
+  --color-brand-900: #0b2a3d;
+  --color-brand-950: #071a26;
+
+  --color-teal-50: #edf9f7;
+  --color-teal-100: #d2f0ed;
+  --color-teal-500: #1e8a83;
+  --color-teal-700: #0f625e;
+
+  --color-accent-100: #f4ead2;
+  --color-accent-500: #c49a45;
+  --color-accent-700: #8b6827;
+
+  --color-neutral-50: #f8fafc;
+  --color-neutral-100: #f1f5f9;
+  --color-neutral-200: #e2e8f0;
+  --color-neutral-300: #cbd5e1;
+  --color-neutral-400: #94a3b8;
+  --color-neutral-500: #64748b;
+  --color-neutral-600: #475569;
+  --color-neutral-700: #334155;
+  --color-neutral-800: #1e293b;
+  --color-neutral-900: #0f172a;
+  --color-neutral-950: #020617;
+
+  --color-surface: #ffffff;
+  --color-surface-muted: #f8fafc;
+  --color-surface-inverse: #071a26;
+
+  --color-success-500: #16835b;
+  --color-warning-500: #b7791f;
+  --color-error-500: #c2413a;
+  --color-info-500: #2563a8;
+
+  --spacing-section-sm: 4rem;
+  --spacing-section-md: 6rem;
+  --spacing-section-lg: 8rem;
+  --spacing-card: 1.5rem;
+  --spacing-field: 0.875rem;
+  --spacing-gutter: 1.5rem;
+
+  --container-prose: 72ch;
+  --container-page: 80rem;
+  --container-wide: 96rem;
+  --container-enterprise: 112rem;
+
+  --radius-field: 0.75rem;
+  --radius-card: 1.25rem;
+  --radius-panel: 1.75rem;
+  --radius-button: 999px;
+
+  --shadow-xs: 0 1px 2px rgb(15 23 42 / 0.05);
+  --shadow-card: 0 18px 45px rgb(15 23 42 / 0.08);
+  --shadow-elevated: 0 24px 70px rgb(15 23 42 / 0.12);
+  --shadow-button: 0 10px 24px rgb(23 75 104 / 0.22);
+
+  --breakpoint-xs: 30rem;
+  --breakpoint-sm: 40rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
+  --breakpoint-2xl: 96rem;
+  --breakpoint-3xl: 120rem;
+
+  --z-header: 50;
+  --z-overlay: 80;
+  --z-modal: 100;
+
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-emphasized: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --duration-fast: 160ms;
+  --duration-normal: 280ms;
+  --duration-slow: 520ms;
+
+  --animate-fade-up: fade-up 420ms var(--ease-standard);
+  --animate-reveal: reveal 520ms var(--ease-emphasized);
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes reveal {
+    from {
+      opacity: 0;
+      clip-path: inset(0 0 14% 0);
+    }
+
+    to {
+      opacity: 1;
+      clip-path: inset(0 0 0 0);
+    }
+  }
+}
+
+:root {
+  --crn-header-height: 4.5rem;
+  --crn-readable-measure: 68ch;
+}
+
+[data-theme="dark"] {
+  --color-surface: #071a26;
+  --color-surface-muted: #0b2a3d;
+}
+
+html {
+  color-scheme: light;
+}
+
+[data-theme="dark"] html {
+  color-scheme: dark;
+}
+
+body {
+  @apply bg-surface font-sans text-neutral-900 antialiased;
+}
+
+@utility section-shell {
+  margin-inline: auto;
+  max-width: var(--container-page);
+  padding-inline: 1.5rem;
+}
+
+@utility enterprise-ring {
+  box-shadow: inset 0 0 0 1px rgb(226 232 240 / 0.85);
+}
+
+@utility text-readable {
+  max-width: var(--crn-readable-measure);
+}
+
+@utility focus-enterprise {
+  outline: 2px solid var(--color-brand-500);
+  outline-offset: 2px;
+}
