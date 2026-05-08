@@ -8,7 +8,7 @@ Fictional Indonesian enterprise website for CRN Advisory Systems — a premium A
 
 - **Runtime/package manager**: Bun (not npm/yarn/pnpm). Node >=22.12.0.
 - **Framework**: Astro 6 (SSG, no SSR, no UI framework islands currently).
-- **Styling**: Tailwind CSS v4 via `@tailwindcss/vite` plugin — there is no `tailwind.config.*`. All design tokens live in `src/styles/global.css` using the `@theme` directive.
+- **Styling**: Tailwind CSS v4 via `@tailwindcss/vite` plugin — there is no `tailwind.config.*`. All design tokens live in `src/styles/global.css` using the `@theme` directive. **You MUST use Tailwind for all styling. Only write plain CSS when Tailwind cannot express the needed style (e.g., complex animations, SVG filters, hacky workarounds). Document the reason in a comment when resorting to plain CSS.**
 - **TypeScript**: Strict config extending `astro/tsconfigs/strict`.
 - **Lint**: ESLint flat config with `eslint-plugin-astro` + `eslint-config-prettier`.
 - **Format**: Prettier with `prettier-plugin-astro` and `prettier-plugin-tailwindcss`.
