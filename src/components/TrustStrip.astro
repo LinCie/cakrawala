@@ -1,0 +1,170 @@
+---
+const referenceStandards = [
+  "ISO/IEC 27001",
+  "ISO/IEC 27701",
+  "ISO/IEC 20000",
+  "ISO 22301",
+];
+
+const platformEcosystems = [
+  "AWS environment delivery",
+  "Microsoft estate transformation",
+  "Google Cloud data programs",
+];
+
+const operatingContexts = [
+  "Banking and financial services",
+  "Logistics and supply chain",
+  "Energy and utilities",
+  "Healthcare",
+  "Manufacturing",
+  "State-owned enterprises",
+];
+---
+
+<section class="bg-neutral-50 py-12 md:py-14" data-trust-strip>
+  <div class="section-shell">
+    <div
+      class="dark:border-brand-800/80 border-y border-neutral-200/80 py-6 md:py-8"
+    >
+      <div class="flex flex-col gap-7 lg:flex-row lg:items-start lg:gap-10">
+        <div class="max-w-[32rem]" data-trust-strip-copy>
+          <p
+            class="text-caption text-accent-700 mb-3 font-medium tracking-[0.1em] uppercase"
+          >
+            Trust Signals
+          </p>
+          <h2
+            class="max-w-[22rem] text-[1.125rem] leading-[1.35] font-semibold tracking-[-0.015em] text-neutral-900 dark:text-neutral-100"
+          >
+            Reference standards, platform familiarity, and operating context for
+            enterprise diligence.
+          </h2>
+          <p
+            class="text-body-sm mt-3 max-w-[var(--crn-readable-measure)] leading-[1.7] text-neutral-600 dark:text-neutral-300"
+          >
+            Framed for risk, procurement, and executive review, this strip is a
+            concise view of the environments and control models our work is
+            built around.
+          </p>
+        </div>
+
+        <div
+          class="grid flex-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6"
+          data-trust-strip-groups
+        >
+          <section
+            class="dark:border-brand-800 border-t border-neutral-200 pt-4 sm:col-span-2 lg:col-span-1 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-6"
+            data-trust-strip-group
+          >
+            <h3
+              class="text-caption font-medium tracking-[0.08em] text-neutral-500 uppercase dark:text-neutral-400"
+            >
+              Reference standards
+            </h3>
+            <ul
+              class="mt-3 flex flex-wrap gap-2.5"
+              aria-label="Reference standards"
+            >
+              {
+                referenceStandards.map((standard) => (
+                  <li>
+                    <span class="bg-surface text-body-sm dark:border-brand-800 dark:bg-brand-950 inline-flex items-center gap-2 rounded-[var(--radius-button)] border border-neutral-200 px-3 py-1.5 leading-[1.35] font-medium tracking-[0.01em] text-neutral-700 dark:text-neutral-200">
+                      <span
+                        class="bg-accent-500 size-1.5 shrink-0 rounded-full"
+                        aria-hidden="true"
+                      />
+                      {standard}
+                    </span>
+                  </li>
+                ))
+              }
+            </ul>
+          </section>
+
+          <section
+            class="dark:border-brand-800 border-t border-neutral-200 pt-4 lg:border-l lg:pt-0 lg:pl-6"
+            data-trust-strip-group
+          >
+            <h3
+              class="text-caption font-medium tracking-[0.08em] text-neutral-500 uppercase dark:text-neutral-400"
+            >
+              Platform familiarity
+            </h3>
+            <ul class="mt-3 space-y-2.5">
+              {
+                platformEcosystems.map((platform) => (
+                  <li class="text-body-sm leading-[1.55] text-neutral-700 dark:text-neutral-200">
+                    {platform}
+                  </li>
+                ))
+              }
+            </ul>
+          </section>
+
+          <section
+            class="dark:border-brand-800 border-t border-neutral-200 pt-4 lg:border-l lg:pt-0 lg:pl-6"
+            data-trust-strip-group
+          >
+            <h3
+              class="text-caption font-medium tracking-[0.08em] text-neutral-500 uppercase dark:text-neutral-400"
+            >
+              Operating contexts
+            </h3>
+            <ul class="mt-3 space-y-2.5">
+              {
+                operatingContexts.map((context) => (
+                  <li class="text-body-sm leading-[1.55] text-neutral-600 dark:text-neutral-300">
+                    {context}
+                  </li>
+                ))
+              }
+            </ul>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  document.querySelectorAll("[data-trust-strip]").forEach((root) => {
+    const copyChildren = root.querySelectorAll("[data-trust-strip-copy] > *");
+    const groups = root.querySelectorAll("[data-trust-strip-group]");
+
+    if (prefersReducedMotion) {
+      gsap.set([...copyChildren, ...groups], { opacity: 1, y: 0 });
+      return;
+    }
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: root,
+        start: "top 85%",
+        once: true,
+      },
+      defaults: { ease: "power2.out" },
+    });
+
+    tl.fromTo(
+      copyChildren,
+      { opacity: 0, y: 10 },
+      { opacity: 1, y: 0, duration: 0.42, stagger: 0.08 },
+      0,
+    ).fromTo(
+      groups,
+      { opacity: 0, y: 10 },
+      { opacity: 1, y: 0, duration: 0.42, stagger: 0.08 },
+      0.16,
+    );
+  });
+</script>
