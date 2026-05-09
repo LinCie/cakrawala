@@ -1,0 +1,267 @@
+---
+const featuredRisk = {
+  label: "PDP compliance pressure",
+  consequence:
+    "Controllers and processors are now expected to demonstrate compliance, not merely plan for it.",
+  signal: "UU PDP enforcement began October 2024",
+  emphasis:
+    "This is the clearest board-level exposure because it reaches governance, data handling, and executive accountability at once.",
+};
+
+const supportingRisks = [
+  {
+    label: "Ungoverned AI pilots",
+    consequence:
+      "Pilots are moving ahead without policy, model inventory, or approval flow.",
+    signal: "OJK AI Governance Guidance, April 2025",
+  },
+  {
+    label: "Fragmented data foundations",
+    consequence:
+      "Siloed and unclassified data blocks analytics, control, and AI readiness.",
+    signal: "Data quality and lineage gaps across sectors",
+  },
+  {
+    label: "Cloud and cyber control gaps",
+    consequence:
+      "Cloud residency, cost, and resilience controls are still disconnected from business continuity.",
+    signal: "Local cloud regions; digital resilience guidance",
+  },
+];
+---
+
+<section
+  id="problem-framing"
+  class="bg-brand-950 py-section-lg md:py-section-lg relative overflow-hidden"
+  aria-labelledby="problem-framing-headline"
+>
+  <div class="section-shell">
+    <div
+      class="grid gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.25fr)] lg:gap-16"
+    >
+      <div class="lg:pt-8" data-pf-text>
+        <p
+          class="text-accent-500 mb-5 text-[0.6875rem] font-semibold tracking-[0.12em] uppercase"
+        >
+          Converging Risks
+        </p>
+
+        <h2
+          id="problem-framing-headline"
+          class="font-display text-h2 leading-[1.05] font-semibold tracking-[-0.025em] text-neutral-50"
+        >
+          Enterprise modernization is now a board-level risk question, not a
+          delivery question.
+        </h2>
+
+        <p
+          class="text-body-lg mt-5 max-w-[52ch] leading-[1.7] text-neutral-400"
+        >
+          Governance gaps are no longer isolated. AI, data, cloud, cyber, and
+          privacy obligations now move together, so leadership has to assess
+          operating risk before scale.
+        </p>
+      </div>
+
+      <div class="space-y-6" data-pf-briefing>
+        <article
+          class="rounded-card bg-brand-900/70 border border-white/[0.08] p-6 md:p-7"
+          data-pf-featured
+        >
+          <p
+            class="text-caption text-accent-500 font-medium tracking-[0.08em] uppercase"
+          >
+            Board takeaway
+          </p>
+
+          <h3
+            class="mt-3 font-sans text-[1.375rem] leading-[1.25] font-semibold tracking-[-0.02em] text-neutral-50"
+          >
+            {featuredRisk.label} is the clearest sign that governance now sits ahead
+            of execution.
+          </h3>
+
+          <p
+            class="text-body-sm mt-3 max-w-[62ch] leading-[1.7] text-neutral-300"
+          >
+            {featuredRisk.consequence}
+          </p>
+
+          <p
+            class="text-body-sm mt-3 max-w-[62ch] leading-[1.7] text-neutral-300"
+          >
+            {featuredRisk.emphasis}
+          </p>
+
+          <div class="mt-5 flex flex-wrap gap-2">
+            <span
+              class="text-caption rounded-full border border-white/10 bg-white/5 px-3 py-1 font-medium tracking-[0.06em] text-neutral-200 uppercase"
+            >
+              Legal exposure
+            </span>
+            <span
+              class="text-caption rounded-full border border-white/10 bg-white/5 px-3 py-1 font-medium tracking-[0.06em] text-neutral-200 uppercase"
+            >
+              Data handling
+            </span>
+            <span
+              class="text-caption rounded-full border border-white/10 bg-white/5 px-3 py-1 font-medium tracking-[0.06em] text-neutral-200 uppercase"
+            >
+              Executive accountability
+            </span>
+          </div>
+        </article>
+
+        <div data-pf-supporting>
+          <h3
+            id="problem-framing-supporting"
+            class="text-caption font-medium tracking-[0.08em] text-neutral-400 uppercase"
+          >
+            Supporting risks
+          </h3>
+
+          <ol
+            class="mt-3 grid gap-3 md:grid-cols-2"
+            aria-labelledby="problem-framing-supporting"
+          >
+            {
+              supportingRisks.map((risk, index) => (
+                <li
+                  class:list={[
+                    "rounded-card bg-brand-900/35 border border-white/[0.06] p-5",
+                    index === 0
+                      ? "md:col-span-2 md:grid md:grid-cols-[3rem_minmax(0,1fr)] md:gap-5 md:p-6"
+                      : "space-y-3",
+                  ]}
+                >
+                  <div
+                    class:list={[
+                      "text-caption text-accent-500 flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5 font-mono font-medium tracking-[0.08em]",
+                      index === 0 ? "md:mt-1" : "",
+                    ]}
+                    aria-hidden="true"
+                  >
+                    {String(index + 1).padStart(2, "0")}
+                  </div>
+
+                  <div class={index === 0 ? "space-y-3" : ""}>
+                    <p class="text-caption font-medium tracking-[0.08em] text-teal-100 uppercase">
+                      {risk.signal}
+                    </p>
+
+                    <h4 class="font-sans text-[1rem] leading-[1.35] font-semibold tracking-[-0.01em] text-neutral-100">
+                      {risk.label}
+                    </h4>
+
+                    <p class="text-body-sm leading-[1.65] text-neutral-300">
+                      {risk.consequence}
+                    </p>
+                  </div>
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+
+        <p class="text-body-sm max-w-[60ch] leading-[1.7] text-neutral-400">
+          In practical terms, CRN frames the problem the way executive teams
+          review it: who owns the exposure, what needs evidence, and what can no
+          longer be deferred.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  const section = document.getElementById("problem-framing");
+  if (!section) throw new Error("problem-framing section not found");
+
+  const textCol = section.querySelector<HTMLElement>("[data-pf-text]");
+  const featuredBlock =
+    section.querySelector<HTMLElement>("[data-pf-featured]");
+  const supportingCards = section.querySelectorAll<HTMLElement>(
+    "[data-pf-supporting] li",
+  );
+  const closingCopy = section.querySelectorAll<HTMLElement>(
+    "[data-pf-briefing] > p",
+  );
+
+  const revealTargets = [
+    textCol,
+    featuredBlock,
+    ...supportingCards,
+    ...closingCopy,
+  ].filter(Boolean) as HTMLElement[];
+
+  if (prefersReducedMotion) {
+    gsap.set(revealTargets, {
+      opacity: 1,
+      y: 0,
+    });
+  } else {
+    const primaryTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: "top 75%",
+        once: true,
+      },
+      defaults: { ease: "power2.out" },
+    });
+
+    if (textCol) {
+      primaryTl.fromTo(
+        textCol.children,
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: 0.45, stagger: 0.08 },
+        0,
+      );
+    }
+
+    if (featuredBlock) {
+      primaryTl.fromTo(
+        featuredBlock,
+        { opacity: 0, y: 16 },
+        { opacity: 1, y: 0, duration: 0.5 },
+        0.18,
+      );
+    }
+
+    if (supportingCards.length > 0) {
+      primaryTl.fromTo(
+        supportingCards,
+        { opacity: 0, y: 12 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.4,
+          stagger: 0.08,
+        },
+        0.34,
+      );
+    }
+
+    if (closingCopy.length > 0) {
+      primaryTl.fromTo(
+        closingCopy,
+        { opacity: 0, y: 10 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.38,
+          stagger: 0.08,
+        },
+        0.52,
+      );
+    }
+  }
+</script>
