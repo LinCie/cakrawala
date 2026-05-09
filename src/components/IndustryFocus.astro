@@ -1,0 +1,197 @@
+---
+import { sectorClusters } from "../data/industries";
+---
+
+<section
+  id="industry-focus"
+  class="py-section-lg dark:border-brand-800/70 dark:bg-surface-inverse relative overflow-hidden border-y border-neutral-200 bg-neutral-50"
+  aria-labelledby="industry-focus-headline"
+>
+  <div class="section-shell">
+    <div
+      class="grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start lg:gap-16"
+    >
+      <div class="max-w-[58ch]" data-if-header>
+        <p
+          class="text-accent-700 dark:text-accent-500 text-caption mb-4 font-semibold tracking-[0.12em] uppercase"
+        >
+          Sector relevance
+        </p>
+
+        <h2
+          id="industry-focus-headline"
+          class="font-display text-h2 text-brand-900 leading-[1.05] font-semibold tracking-[-0.025em] dark:text-neutral-100"
+        >
+          Built for sectors where governance is part of the operating model.
+        </h2>
+
+        <p
+          class="text-body-lg text-readable mt-5 leading-[1.7] text-neutral-600 dark:text-neutral-300"
+        >
+          CRN does not present industries as a generic logo wall. The section
+          groups sectors by the kind of scrutiny the buying committee will
+          actually bring: regulatory control, continuity risk, or multi-entity
+          governance.
+        </p>
+
+        <a
+          class="bg-brand-700 text-surface shadow-button hover:bg-brand-900 focus-visible:outline-brand-500 text-body mt-8 inline-flex items-center gap-2 rounded-full px-8 py-4 font-semibold transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2"
+          href="/industries"
+        >
+          <span>Browse sector briefs</span>
+          <svg
+            class="size-4"
+            aria-hidden="true"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"></path>
+          </svg>
+        </a>
+
+        <p
+          class="text-body-sm mt-4 max-w-[56ch] leading-[1.7] text-neutral-500 dark:text-neutral-400"
+        >
+          Use this overview when the committee needs a quick read on where CRN
+          already speaks the language of the sector.
+        </p>
+      </div>
+
+      <div class="space-y-4" data-if-clusters>
+        {
+          sectorClusters.map((cluster) => (
+            <section
+              class:list={[
+                "rounded-panel border p-6 md:p-7",
+                cluster.tone === "tint"
+                  ? "border-brand-100 bg-brand-50/70 dark:border-brand-800/70 dark:bg-brand-950/60"
+                  : "bg-surface shadow-card dark:border-brand-800/70 dark:bg-brand-950 border-neutral-200",
+              ]}
+              data-if-cluster
+            >
+              <div class="mb-4 flex items-center gap-2.5">
+                <span
+                  class="bg-accent-500 size-1.5 shrink-0 rounded-full"
+                  aria-hidden="true"
+                />
+                <p class="text-caption font-semibold tracking-[0.12em] text-neutral-500 uppercase dark:text-neutral-400">
+                  {cluster.label}
+                </p>
+                <span class="text-caption dark:border-brand-800/70 dark:bg-brand-950 ml-auto rounded-full border border-neutral-200 bg-neutral-50 px-2.5 py-1 font-medium tracking-[0.04em] text-neutral-500 uppercase dark:text-neutral-400">
+                  {cluster.sectors.length} sectors
+                </span>
+              </div>
+
+              <h3 class="font-display text-h3 text-brand-900 leading-[1.08] font-semibold tracking-[-0.025em] dark:text-neutral-100">
+                {cluster.title}
+              </h3>
+
+              <p class="text-body-sm mt-3 max-w-[58ch] leading-[1.7] text-neutral-600 dark:text-neutral-300">
+                {cluster.summary}
+              </p>
+
+              <ul class="mt-5 space-y-3" aria-label={cluster.title}>
+                {cluster.sectors.map((industry) => (
+                  <li>
+                    <a
+                      class="group bg-surface hover:border-brand-200 focus-visible:outline-brand-500 dark:border-brand-800/70 dark:bg-brand-950 dark:hover:border-brand-700 flex items-start gap-4 rounded-[var(--radius-card)] border border-neutral-200 px-4 py-4 transition-colors duration-150 hover:shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2"
+                      href={`/industries/${industry.slug}`}
+                    >
+                      <span
+                        class="text-brand-700 bg-brand-50 border-brand-100 text-caption dark:border-brand-800/70 dark:bg-brand-900 dark:text-accent-500 flex size-10 shrink-0 items-center justify-center rounded-full border font-mono font-medium tracking-[0.08em]"
+                        aria-hidden="true"
+                      >
+                        {industry.index}
+                      </span>
+
+                      <span class="min-w-0 flex-1">
+                        <span class="flex flex-wrap items-center gap-2">
+                          <span class="text-body text-brand-900 leading-[1.3] font-semibold tracking-[-0.01em] dark:text-neutral-100">
+                            {industry.name}
+                          </span>
+                        </span>
+                        <span class="text-body-sm mt-1.5 block leading-[1.65] text-neutral-600 dark:text-neutral-300">
+                          {industry.framing}
+                        </span>
+                      </span>
+
+                      <svg
+                        class="text-brand-500 dark:text-accent-500 mt-0.5 size-4 shrink-0 transition-transform duration-150 group-hover:translate-x-0.5"
+                        aria-hidden="true"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+                        />
+                      </svg>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  const section = document.getElementById("industry-focus");
+  if (!section) throw new Error("industry-focus section not found");
+
+  const header = section.querySelector<HTMLElement>("[data-if-header]");
+  const clusters = section.querySelectorAll<HTMLElement>("[data-if-cluster]");
+
+  const allTargets = [header, ...clusters].filter(Boolean) as HTMLElement[];
+
+  if (prefersReducedMotion) {
+    gsap.set(allTargets, { opacity: 1, y: 0 });
+  } else {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: "top 75%",
+        once: true,
+      },
+      defaults: { ease: "power2.out" },
+    });
+
+    if (header) {
+      tl.fromTo(
+        header.children,
+        { opacity: 0, y: 14 },
+        { opacity: 1, y: 0, duration: 0.5, stagger: 0.08 },
+        0,
+      );
+    }
+
+    if (clusters.length) {
+      tl.fromTo(
+        clusters,
+        { opacity: 0, y: 16 },
+        { opacity: 1, y: 0, duration: 0.45, stagger: 0.12, ease: "power3.out" },
+        0.3,
+      );
+    }
+  }
+</script>

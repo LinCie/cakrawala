@@ -6,9 +6,9 @@ import TrustStrip from "../components/TrustStrip.astro";
 import ProblemFraming from "../components/ProblemFraming.astro";
 import SolutionOverview from "../components/SolutionOverview.astro";
 import ServiceGrid from "../components/ServiceGrid.astro";
+import IndustryFocus from "../components/IndustryFocus.astro";
 
 const sections = [
-  "Industry Focus",
   "Differentiators",
   "Case-Study Preview",
   "Trust Center",
@@ -50,6 +50,7 @@ const sections = [
       <ProblemFraming />
       <SolutionOverview />
       <ServiceGrid />
+      <IndustryFocus />
       {
         sections.map((section) => (
           <section class="flex h-screen items-center justify-center px-6 text-center">
