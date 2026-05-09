@@ -5,9 +5,9 @@ import Hero from "../components/Hero.astro";
 import TrustStrip from "../components/TrustStrip.astro";
 import ProblemFraming from "../components/ProblemFraming.astro";
 import SolutionOverview from "../components/SolutionOverview.astro";
+import ServiceGrid from "../components/ServiceGrid.astro";
 
 const sections = [
-  "Service Grid",
   "Industry Focus",
   "Differentiators",
   "Case-Study Preview",
@@ -49,6 +49,7 @@ const sections = [
       <TrustStrip />
       <ProblemFraming />
       <SolutionOverview />
+      <ServiceGrid />
       {
         sections.map((section) => (
           <section class="flex h-screen items-center justify-center px-6 text-center">

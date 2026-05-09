@@ -1,0 +1,460 @@
+---
+type ServiceIcon =
+  | "cpu"
+  | "database"
+  | "cloud"
+  | "shield"
+  | "settings"
+  | "file-check";
+
+type Service = {
+  id: string;
+  name: string;
+  badge?: string;
+  description: string;
+  extendedDescription?: string;
+  icon: ServiceIcon;
+  href: string;
+  ctaLabel: string;
+  elevated?: boolean;
+};
+
+type CapabilityPath = {
+  id: string;
+  eyebrow: string;
+  title: string;
+  summary: string;
+  note: string;
+  featuredId: string;
+  supportingId: string;
+  reverse?: boolean;
+};
+
+const iconPaths: Record<ServiceIcon, string[]> = {
+  cpu: [
+    "M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 0 0 2.25-2.25V6.75a2.25 2.25 0 0 0-2.25-2.25H6.75A2.25 2.25 0 0 0 4.5 6.75v10.5a2.25 2.25 0 0 0 2.25 2.25Zm.75-12h9v9h-9v-9Z",
+  ],
+  database: [
+    "M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125",
+  ],
+  cloud: [
+    "M2.25 15a4.5 4.5 0 0 0 4.5 4.5H18a3.75 3.75 0 0 0 1.332-7.257 3 3 0 0 0-3.758-3.848 5.25 5.25 0 0 0-10.233 2.33A4.502 4.502 0 0 0 2.25 15Z",
+  ],
+  shield: [
+    "M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z",
+  ],
+  settings: [
+    "M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.43l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z",
+    "M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z",
+  ],
+  "file-check": [
+    "M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z",
+  ],
+};
+
+const services: Service[] = [
+  {
+    id: "ai-governance",
+    name: "AI Governance & Responsible Automation",
+    badge: "NusaControl™",
+    description:
+      "AI readiness assessment, use-case prioritization, model governance, policy design, approval workflows, human-in-the-loop design, and AI monitoring for regulated enterprises.",
+    extendedDescription:
+      "Establish the policies, controls, approval workflows, and monitoring required to scale AI responsibly. Our framework aligns with Indonesian regulatory expectations while maintaining the agility needed for competitive advantage.",
+    icon: "cpu",
+    href: "/ai-governance",
+    ctaLabel: "Review governance brief",
+    elevated: true,
+  },
+  {
+    id: "data-platforms",
+    name: "Enterprise Data Platform Modernization",
+    badge: "CakraData™",
+    description:
+      "Data architecture, lakehouse design, data quality, lineage, master data management, semantic layer, and analytics modernization for AI-ready enterprise platforms.",
+    extendedDescription:
+      "Build the data foundation that AI initiatives require. We design enterprise data platforms that satisfy both regulatory requirements for data residency and the analytical demands of modern AI workloads.",
+    icon: "database",
+    href: "/data-platforms",
+    ctaLabel: "Open data platform brief",
+    elevated: true,
+  },
+  {
+    id: "cloud-risk",
+    name: "Cloud Risk & Modernization",
+    description:
+      "Cloud migration strategy, hybrid architecture, landing zones, FinOps, data residency, security architecture, and vendor-neutral cloud controls.",
+    extendedDescription:
+      "Design cloud landing zones, residency controls, security guardrails, and cost governance so migration decisions stay aligned with executive risk and operating priorities.",
+    icon: "cloud",
+    href: "/cloud-risk",
+    ctaLabel: "Review cloud controls",
+  },
+  {
+    id: "digital-resilience",
+    name: "Digital Resilience & Cyber Governance",
+    description:
+      "Cyber maturity assessment, resilience operating model, BCP/DR integration, executive risk dashboards, third-party risk, and incident tabletop exercises.",
+    extendedDescription:
+      "Build the resilience operating model, dashboarding, and incident readiness required for boards, risk teams, and continuity owners to trust the program.",
+    icon: "shield",
+    href: "/digital-resilience",
+    ctaLabel: "See resilience brief",
+  },
+  {
+    id: "automation",
+    name: "Enterprise Automation & Operations Intelligence",
+    description:
+      "Workflow automation, process mining, RPA governance, operational dashboards, predictive monitoring, and AI-assisted knowledge workflows.",
+    icon: "settings",
+    href: "/automation",
+    ctaLabel: "Review automation brief",
+  },
+  {
+    id: "compliance",
+    name: "Trust Center & Compliance Enablement",
+    description:
+      "PDP readiness, policy mapping, control documentation, audit preparation, procurement documentation, and evidence packs.",
+    icon: "file-check",
+    href: "/trust-center",
+    ctaLabel: "Open compliance brief",
+  },
+];
+
+const serviceById = Object.fromEntries(
+  services.map((service) => [service.id, service]),
+) as Record<string, Service>;
+
+const capabilityPaths: CapabilityPath[] = [
+  {
+    id: "governed-ai-data",
+    eyebrow: "Entry path 01",
+    title: "Governed AI and data foundations",
+    summary:
+      "Start here when leadership needs policy, approval flow, and a trusted data base before automation expands.",
+    note: "Best for early-stage programs, control design, and platform readiness.",
+    featuredId: "ai-governance",
+    supportingId: "data-platforms",
+    reverse: false,
+  },
+  {
+    id: "cloud-ops",
+    eyebrow: "Entry path 02",
+    title: "Cloud and operational modernization",
+    summary:
+      "Use this path when migration pressure, cost, and operating controls need to move together.",
+    note: "Best when the stack needs reshaping without adding delivery risk.",
+    featuredId: "cloud-risk",
+    supportingId: "automation",
+    reverse: true,
+  },
+  {
+    id: "resilience-assurance",
+    eyebrow: "Entry path 03",
+    title: "Resilience and compliance assurance",
+    summary:
+      "Choose this when the work exists already, but stakeholders need evidence, continuity, and auditability.",
+    note: "Best for review cycles, board reporting, and procurement readiness.",
+    featuredId: "digital-resilience",
+    supportingId: "compliance",
+    reverse: false,
+  },
+];
+---
+
+<section
+  id="service-grid"
+  class="dark:bg-surface-inverse relative overflow-hidden bg-neutral-50"
+  aria-labelledby="service-grid-headline"
+>
+  <div class="section-shell py-section-lg md:py-section-lg">
+    <div class="mx-auto max-w-[var(--container-enterprise)]">
+      <div
+        class="grid gap-12 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:items-start lg:gap-16"
+      >
+        <div class="max-w-[60ch]" data-sg-header>
+          <p
+            class="text-accent-700 dark:text-accent-500 mb-4 text-[0.6875rem] font-semibold tracking-[0.12em] uppercase"
+          >
+            Capability map
+          </p>
+          <h2
+            id="service-grid-headline"
+            class="font-display text-h2 text-brand-900 leading-[1.05] font-semibold tracking-[-0.025em] dark:text-neutral-100"
+          >
+            Three entry paths into governed transformation.
+          </h2>
+          <p
+            class="text-body-lg mt-5 leading-[1.7] text-neutral-600 dark:text-neutral-300"
+          >
+            The section groups services by the decision buyers are actually
+            making: establish controls, modernize the stack, or prove resilience
+            with evidence. That keeps the page balanced for executives without
+            hiding the technical depth underneath.
+          </p>
+
+          <ul class="mt-6 space-y-3">
+            <li
+              class="text-body-sm flex items-start gap-3 leading-[1.65] text-neutral-700 dark:text-neutral-200"
+            >
+              <span
+                class="bg-accent-500 mt-2 size-1.5 shrink-0 rounded-full"
+                aria-hidden="true"></span>
+              <span>Policy and approvals come before scale.</span>
+            </li>
+            <li
+              class="text-body-sm flex items-start gap-3 leading-[1.65] text-neutral-700 dark:text-neutral-200"
+            >
+              <span
+                class="bg-accent-500 mt-2 size-1.5 shrink-0 rounded-full"
+                aria-hidden="true"></span>
+              <span>Modernization is paired with control design.</span>
+            </li>
+            <li
+              class="text-body-sm flex items-start gap-3 leading-[1.65] text-neutral-700 dark:text-neutral-200"
+            >
+              <span
+                class="bg-accent-500 mt-2 size-1.5 shrink-0 rounded-full"
+                aria-hidden="true"></span>
+              <span>Evidence and handoff are part of the offer.</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="space-y-6" data-sg-panels>
+          {
+            capabilityPaths.map((path, index) => {
+              const featured = serviceById[path.featuredId];
+              const supporting = serviceById[path.supportingId];
+              const serviceCards = path.reverse
+                ? [supporting, featured]
+                : [featured, supporting];
+
+              return (
+                <article
+                  class:list={[
+                    "rounded-panel border p-6 lg:p-7",
+                    index % 2 === 0
+                      ? "bg-surface/95 shadow-card dark:border-brand-800/70 dark:bg-brand-900/35 dark:shadow-none"
+                      : "dark:border-brand-800/70 dark:bg-brand-950/20 bg-neutral-50/90",
+                  ]}
+                  data-sg-panel
+                >
+                  <div class="mb-5 flex flex-wrap items-center justify-between gap-3">
+                    <span class="text-caption font-mono tracking-[0.1em] text-neutral-500 uppercase dark:text-neutral-400">
+                      {path.eyebrow}
+                    </span>
+                    <span class="text-caption border-brand-100 bg-brand-50 text-brand-900 dark:border-brand-800/70 dark:bg-brand-900/60 dark:text-brand-100 rounded-full border px-3 py-1 font-medium tracking-[0.06em] uppercase">
+                      2 capabilities
+                    </span>
+                  </div>
+
+                  <h3 class="font-display text-h3 text-brand-900 leading-[1.08] font-semibold tracking-[-0.025em] dark:text-neutral-100">
+                    {path.title}
+                  </h3>
+
+                  <p class="text-body-sm mt-3 max-w-[58ch] leading-[1.7] text-neutral-600 dark:text-neutral-300">
+                    {path.summary}
+                  </p>
+
+                  <p class="text-body-sm mt-3 max-w-[58ch] leading-[1.7] text-neutral-500 dark:text-neutral-400">
+                    {path.note}
+                  </p>
+
+                  <div class="mt-6 grid gap-6 md:grid-cols-2">
+                    {serviceCards.map((service) => {
+                      const isFeatured = service.id === path.featuredId;
+
+                      return (
+                        <div
+                          class:list={[
+                            "group rounded-card border p-4",
+                            isFeatured
+                              ? "border-brand-100 bg-brand-50/55 dark:border-brand-800/70 dark:bg-brand-900/40 shadow-xs"
+                              : "bg-surface/80 dark:border-brand-800/70 dark:bg-brand-950/20 border-neutral-200",
+                          ]}
+                          data-sg-tile
+                        >
+                          <div class="mb-4 flex items-start justify-between gap-3">
+                            <div
+                              class:list={[
+                                "inline-flex items-center justify-center rounded-xl ring-1",
+                                isFeatured
+                                  ? "bg-brand-50 text-brand-700 ring-brand-100 dark:bg-brand-800/60 dark:text-brand-200 dark:ring-brand-700 size-11"
+                                  : "text-brand-700 dark:bg-brand-900/40 dark:text-brand-200 dark:ring-brand-700 size-10 bg-neutral-100 ring-neutral-200",
+                              ]}
+                            >
+                              <svg
+                                class={isFeatured ? "size-5" : "size-4"}
+                                aria-hidden="true"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.5"
+                                viewBox="0 0 24 24"
+                              >
+                                {iconPaths[service.icon].map((d) => (
+                                  <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d={d}
+                                  />
+                                ))}
+                              </svg>
+                            </div>
+
+                            {isFeatured && service.badge ? (
+                              <span class="bg-brand-50 text-brand-900 dark:bg-brand-900/60 dark:text-brand-100 border-brand-100 dark:border-brand-800/70 inline-flex items-center rounded-full border px-3 py-1 text-[0.6875rem] font-semibold tracking-[0.04em]">
+                                {service.badge}
+                              </span>
+                            ) : (
+                              <span class="text-caption font-mono tracking-[0.08em] text-neutral-400 uppercase dark:text-neutral-500">
+                                Supporting capability
+                              </span>
+                            )}
+                          </div>
+
+                          <h4
+                            class:list={[
+                              "text-brand-900 font-semibold tracking-[-0.02em] dark:text-neutral-100",
+                              isFeatured
+                                ? "font-display text-h4 leading-[1.25]"
+                                : "font-sans text-[1.0625rem] leading-[1.3] font-medium",
+                            ]}
+                          >
+                            {service.name}
+                          </h4>
+
+                          <p
+                            class:list={[
+                              "mt-3 leading-[1.7] text-neutral-600 dark:text-neutral-300",
+                              isFeatured ? "text-body-sm" : "text-[0.8125rem]",
+                            ]}
+                          >
+                            {isFeatured
+                              ? (service.extendedDescription ??
+                                service.description)
+                              : service.description}
+                          </p>
+
+                          <a
+                            class="text-brand-700 hover:text-brand-900 dark:text-brand-200 dark:hover:text-brand-100 focus-visible:outline-brand-500 dark:focus-visible:outline-accent-500 mt-5 inline-flex min-h-11 items-center rounded-full px-3 py-2 text-sm font-semibold transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2"
+                            href={service.href}
+                          >
+                            {service.ctaLabel}
+                            <svg
+                              class="ml-1.5 size-4 transition-transform duration-150 group-hover:translate-x-0.5"
+                              aria-hidden="true"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+                              />
+                            </svg>
+                          </a>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </article>
+              );
+            })
+          }
+        </div>
+      </div>
+
+      <div
+        class="rounded-panel dark:border-brand-800/70 dark:bg-brand-950/20 mt-10 flex flex-col gap-4 border border-neutral-200 bg-neutral-50 p-6 sm:flex-row sm:items-center sm:justify-between"
+        data-sg-cta
+      >
+        <p
+          class="text-body-sm max-w-[58ch] leading-[1.7] text-neutral-600 dark:text-neutral-300"
+        >
+          If you already know the risk pattern, the delivery model explains how
+          CRN sequences scope, governance, delivery, and evidence.
+        </p>
+        <a
+          class="bg-brand-700 text-surface shadow-button hover:bg-brand-900 focus-visible:outline-brand-500 inline-flex items-center gap-2 rounded-full px-8 py-4 transition focus-visible:outline-2 focus-visible:outline-offset-2"
+          href="/solutions"
+        >
+          <span class="text-body font-semibold">Review delivery model</span>
+          <svg
+            class="size-4"
+            aria-hidden="true"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  const section = document.getElementById("service-grid");
+  if (!section) throw new Error("service-grid section not found");
+
+  const header = section.querySelector<HTMLElement>("[data-sg-header]");
+  const panels = section.querySelectorAll<HTMLElement>("[data-sg-panel]");
+  const cta = section.querySelector<HTMLElement>("[data-sg-cta]");
+
+  if (prefersReducedMotion) {
+    gsap.set([header, ...panels, cta].filter(Boolean), { opacity: 1, y: 0 });
+  } else {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: "top 72%",
+        once: true,
+      },
+      defaults: { ease: "power2.out" },
+    });
+
+    if (header) {
+      tl.fromTo(
+        header,
+        { opacity: 0, y: 14 },
+        { opacity: 1, y: 0, duration: 0.5 },
+        0,
+      );
+    }
+
+    if (panels.length) {
+      tl.fromTo(
+        panels,
+        { opacity: 0, y: 18 },
+        { opacity: 1, y: 0, duration: 0.5, stagger: 0.12, ease: "power3.out" },
+        0.15,
+      );
+    }
+
+    if (cta) {
+      tl.fromTo(
+        cta,
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.35 },
+        0.8,
+      );
+    }
+  }
+</script>
