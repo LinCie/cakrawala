@@ -7,9 +7,9 @@ import ProblemFraming from "../components/ProblemFraming.astro";
 import SolutionOverview from "../components/SolutionOverview.astro";
 import ServiceGrid from "../components/ServiceGrid.astro";
 import IndustryFocus from "../components/IndustryFocus.astro";
+import Differentiators from "../components/Differentiators.astro";
 
 const sections = [
-  "Differentiators",
   "Case-Study Preview",
   "Trust Center",
   "Insights Preview",
@@ -51,6 +51,7 @@ const sections = [
       <SolutionOverview />
       <ServiceGrid />
       <IndustryFocus />
+      <Differentiators />
       {
         sections.map((section) => (
           <section class="flex h-screen items-center justify-center px-6 text-center">
