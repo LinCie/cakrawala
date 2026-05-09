@@ -1,0 +1,291 @@
+---
+const phases = [
+  {
+    number: "01",
+    name: "Discover",
+    outcome: "Operating context and constraints documented",
+    deliverable: "Board-ready scoping note",
+    gate: "Mandate",
+    solution: null,
+    isBookend: true,
+  },
+  {
+    number: "02",
+    name: "Diagnose",
+    outcome: "Maturity gaps mapped in 10 working days",
+    deliverable: "Prioritized maturity map",
+    gate: "Assessment",
+    solution: "Resiliensi360",
+    isBookend: false,
+  },
+  {
+    number: "03",
+    name: "Design",
+    outcome: "Governance architecture and roadmap approved",
+    deliverable: "Governance roadmap",
+    gate: "Approval",
+    solution: "NusaControl, CakraData",
+    isBookend: false,
+  },
+  {
+    number: "04",
+    name: "Deploy",
+    outcome: "First governed use case in production",
+    deliverable: "Controlled production launch",
+    gate: "Production",
+    solution: "OperataIQ",
+    isBookend: false,
+  },
+  {
+    number: "05",
+    name: "Assure",
+    outcome: "Controls evidence packaged for review",
+    deliverable: "Controls evidence pack",
+    gate: "Audit",
+    solution: "RiksaCloud, NusaControl",
+    isBookend: false,
+  },
+  {
+    number: "06",
+    name: "Scale",
+    outcome: "Internal ownership with continuous governance",
+    deliverable: "Operating handoff and cadence",
+    gate: "Handoff",
+    solution: null,
+    isBookend: true,
+  },
+];
+
+const methodHighlights = [
+  "Scope is defined before any solution recommendation is made.",
+  "Every phase ends with a reviewable evidence output.",
+  "Named CRN workstreams appear only after governance is clear.",
+];
+---
+
+<section
+  id="solution-overview"
+  class="bg-surface dark:bg-surface-inverse relative overflow-hidden"
+  aria-labelledby="solution-overview-headline"
+>
+  <div class="section-shell py-section-lg md:py-section-lg">
+    <div
+      class="mx-auto grid max-w-[var(--container-enterprise)] gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.4fr)] lg:items-start lg:gap-20"
+    >
+      <div class="lg:pt-6" data-so-header>
+        <p
+          class="text-accent-700 dark:text-accent-500 mb-5 text-[0.6875rem] font-semibold tracking-[0.12em] uppercase"
+        >
+          Enterprise Assurance Method
+        </p>
+
+        <h2
+          id="solution-overview-headline"
+          class="font-display text-h2 text-brand-900 leading-[1.05] font-semibold tracking-[-0.025em] dark:text-neutral-100"
+        >
+          Structured delivery from board mandate to operational assurance.
+        </h2>
+
+        <p
+          class="text-body-lg mt-5 max-w-[52ch] leading-[1.7] text-neutral-600 dark:text-neutral-300"
+        >
+          Six phases, each with defined inputs, evidence outputs, and governance
+          checkpoints. The method scales from a single use-case assessment to a
+          full enterprise program, without asking buyers to decode a bundle of
+          disconnected offerings.
+        </p>
+
+        <ul class="mt-6 max-w-[52ch] space-y-3">
+          {
+            methodHighlights.map((highlight) => (
+              <li class="text-body-sm flex items-start gap-3 leading-[1.65] text-neutral-700 dark:text-neutral-200">
+                <span
+                  class="bg-accent-500 mt-2 size-1.5 shrink-0 rounded-full"
+                  aria-hidden="true"
+                />
+                <span>{highlight}</span>
+              </li>
+            ))
+          }
+        </ul>
+
+        <p
+          class="text-body-sm mt-6 max-w-[52ch] leading-[1.7] text-neutral-500 dark:text-neutral-400"
+        >
+          The intent is simple: make the commercial story legible first, then
+          attach the named modules that support it.
+        </p>
+      </div>
+
+      <div class="relative" data-so-timeline>
+        <div class="relative pl-10" data-so-connector>
+          <div
+            class="from-accent-500 to-accent-500 absolute top-2 bottom-2 left-[1.125rem] w-px bg-gradient-to-b via-teal-500 dark:via-teal-100"
+            aria-hidden="true"
+          >
+          </div>
+
+          <ol
+            class="relative grid gap-6"
+            role="list"
+            aria-label="Enterprise Assurance Method phases"
+          >
+            {
+              phases.map((phase) => (
+                <li class="relative" data-so-phase role="listitem">
+                  <div class="absolute top-[1.625rem] -left-[2rem] flex size-5 items-center justify-center">
+                    <span
+                      class="bg-surface ring-accent-500 absolute z-10 flex size-5 items-center justify-center rounded-full ring-2"
+                      aria-hidden="true"
+                    >
+                      <span class="bg-accent-500 size-1.5 rounded-full" />
+                    </span>
+                  </div>
+
+                  <div
+                    class:list={[
+                      "rounded-card border p-5",
+                      phase.number === "03"
+                        ? "border-brand-200 bg-brand-50/60 shadow-card dark:border-brand-700/70 dark:bg-brand-900/40"
+                        : phase.isBookend
+                          ? "dark:border-brand-800 dark:bg-brand-950/55 border-neutral-200 bg-neutral-50"
+                          : "dark:border-brand-800 dark:bg-brand-900/35 border-neutral-200 bg-white",
+                    ]}
+                  >
+                    <div class="mb-4 flex flex-wrap items-center gap-3">
+                      <span
+                        class="text-accent-700 dark:text-accent-500 font-mono text-[0.6875rem] font-semibold tracking-[0.1em]"
+                        aria-hidden="true"
+                      >
+                        {phase.number}
+                      </span>
+                      <span class="text-caption bg-surface dark:bg-brand-950 dark:border-brand-800 rounded-full border border-neutral-200 px-2.5 py-1 font-medium tracking-[0.06em] text-neutral-500 uppercase dark:text-neutral-400">
+                        {phase.gate}
+                      </span>
+                      <div
+                        class="dark:bg-brand-800/70 h-px flex-1 bg-neutral-200"
+                        aria-hidden="true"
+                      />
+                    </div>
+
+                    <h3 class="text-brand-900 font-sans text-[1.0625rem] leading-[1.3] font-semibold tracking-[-0.01em] dark:text-neutral-100">
+                      {phase.name}
+                    </h3>
+
+                    <p class="text-body-sm mt-2 leading-[1.65] text-neutral-600 dark:text-neutral-300">
+                      {phase.outcome}
+                    </p>
+
+                    <p class="text-body-sm mt-3 leading-[1.65] text-neutral-700 dark:text-neutral-200">
+                      <span class="font-medium text-neutral-900 dark:text-neutral-100">
+                        Output:
+                      </span>{" "}
+                      {phase.deliverable}
+                    </p>
+
+                    {phase.solution && (
+                      <div class="mt-4 space-y-2">
+                        <p class="text-caption font-medium tracking-[0.08em] text-neutral-500 uppercase dark:text-neutral-400">
+                          CRN modules
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                          {phase.solution.split(", ").map((sol) => (
+                            <span class="text-caption rounded-full border border-teal-200 bg-teal-50 px-3 py-1 font-medium tracking-[0.04em] text-teal-700 dark:border-teal-500/30 dark:bg-teal-500/10 dark:text-teal-100">
+                              {sol}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-14 max-w-[var(--container-enterprise)]" data-so-footer>
+      <p
+        class="text-body-sm max-w-[60ch] leading-[1.7] text-neutral-500 dark:text-neutral-400"
+      >
+        Each phase produces documented evidence for procurement review, audit
+        submission, and executive reporting. The next section details how these
+        map to your industry context and specific operating environment.
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  const section = document.getElementById("solution-overview");
+  if (!section) throw new Error("solution-overview section not found");
+
+  const header = section.querySelector<HTMLElement>("[data-so-header]");
+  const phases = section.querySelectorAll<HTMLElement>("[data-so-phase]");
+  const footer = section.querySelector<HTMLElement>("[data-so-footer]");
+  const connectorLine = section.querySelector<HTMLElement>(
+    "[data-so-connector] > div",
+  );
+
+  const targets = [header, ...phases, footer].filter(Boolean) as HTMLElement[];
+
+  if (prefersReducedMotion) {
+    gsap.set(targets, { opacity: 1, y: 0 });
+  } else {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: "top 70%",
+        once: true,
+      },
+      defaults: { ease: "power2.out" },
+    });
+
+    if (header) {
+      tl.fromTo(
+        header.children,
+        { opacity: 0, y: 14 },
+        { opacity: 1, y: 0, duration: 0.5, stagger: 0.1 },
+        0,
+      );
+    }
+
+    phases.forEach((phase, i) => {
+      tl.fromTo(
+        phase,
+        { opacity: 0, x: -12 },
+        { opacity: 1, x: 0, duration: 0.45, ease: "power3.out" },
+        0.2 + i * 0.1,
+      );
+    });
+
+    if (connectorLine) {
+      tl.fromTo(
+        connectorLine,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.6, ease: "power2.out" },
+        0.15,
+      );
+    }
+
+    if (footer) {
+      tl.fromTo(
+        footer,
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.4 },
+        0.85,
+      );
+    }
+  }
+</script>

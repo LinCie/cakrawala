@@ -4,9 +4,9 @@ import Header from "../components/Header.astro";
 import Hero from "../components/Hero.astro";
 import TrustStrip from "../components/TrustStrip.astro";
 import ProblemFraming from "../components/ProblemFraming.astro";
+import SolutionOverview from "../components/SolutionOverview.astro";
 
 const sections = [
-  "Solution Overview",
   "Service Grid",
   "Industry Focus",
   "Differentiators",
@@ -37,7 +37,7 @@ const sections = [
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;650&family=Satoshi:wght@650&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;650&family=IBM+Plex+Mono:wght@400;500;600&family=Satoshi:wght@650&display=swap"
       rel="stylesheet"
     />
   </head>
@@ -48,6 +48,7 @@ const sections = [
       <Hero />
       <TrustStrip />
       <ProblemFraming />
+      <SolutionOverview />
       {
         sections.map((section) => (
           <section class="flex h-screen items-center justify-center px-6 text-center">
