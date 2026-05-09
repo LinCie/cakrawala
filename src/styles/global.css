@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @source "../pages";
+@source "../components";
 
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
@@ -180,4 +181,33 @@ body {
 @utility focus-enterprise {
   outline: 2px solid var(--color-brand-500);
   outline-offset: 2px;
+}
+
+@utility animate-fade-up {
+  animation: fade-up 420ms var(--ease-standard) both;
+}
+
+@utility animate-fade-up-100 {
+  animation: fade-up 420ms var(--ease-standard) both;
+  animation-delay: 100ms;
+}
+
+@utility animate-fade-up-200 {
+  animation: fade-up 420ms var(--ease-standard) both;
+  animation-delay: 200ms;
+}
+
+@utility animate-fade-up-300 {
+  animation: fade-up 420ms var(--ease-standard) both;
+  animation-delay: 300ms;
+}
+
+@utility animate-fade-up-400 {
+  animation: fade-up 420ms var(--ease-standard) both;
+  animation-delay: 400ms;
+}
+
+@utility animate-fade-up-500 {
+  animation: fade-up 420ms var(--ease-standard) both;
+  animation-delay: 500ms;
 }

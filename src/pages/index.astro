@@ -1,17 +1,86 @@
 ---
 import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
 ---
 
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta
+      name="description"
+      content="CRN Advisory Systems — Indonesia's enterprise partner for governed AI, resilient data platforms, cloud risk, and digital resilience."
+    />
+    <title>
+      CRN Advisory Systems — Governed Intelligence for Resilient Enterprise
+      Operations
+    </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;650&family=Satoshi:wght@650&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <h1>Astro</h1>
+    <Header />
+    <main>
+      <Hero />
+    </main>
   </body>
 </html>
+
+<style is:global>
+  ::selection {
+    background-color: var(--color-brand-700);
+    color: var(--color-surface);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-neutral-100);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-neutral-400);
+    border-radius: 5px;
+    border: 2px solid var(--color-neutral-100);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-neutral-500);
+  }
+
+  [data-theme="dark"] ::-webkit-scrollbar-track {
+    background: var(--color-brand-950);
+  }
+
+  [data-theme="dark"] ::-webkit-scrollbar-thumb {
+    background: var(--color-brand-700);
+    border-color: var(--color-brand-950);
+  }
+
+  [data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-brand-600);
+  }
+</style>
