@@ -2,6 +2,19 @@
 import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Hero from "../components/Hero.astro";
+
+const sections = [
+  "Trust Strip",
+  "Problem Framing",
+  "Solution Overview",
+  "Service Grid",
+  "Industry Focus",
+  "Differentiators",
+  "Case-Study Preview",
+  "Trust Center",
+  "Insights Preview",
+  "Final CTA",
+];
 ---
 
 <!doctype html>
@@ -32,6 +45,13 @@ import Hero from "../components/Hero.astro";
     <Header />
     <main>
       <Hero />
+      {
+        sections.map((section) => (
+          <section class="flex h-screen items-center justify-center px-6 text-center">
+            <p>{section}</p>
+          </section>
+        ))
+      }
     </main>
   </body>
 </html>
