@@ -1,4 +1,5 @@
 <section
+  id="hero-section"
   class="bg-brand-950 relative isolate flex min-h-svh overflow-hidden pt-[calc(var(--crn-header-height)+4rem)] pb-24 md:pt-[calc(var(--crn-header-height)+5rem)] md:pb-28"
   aria-labelledby="hero-title"
 >
@@ -7,6 +8,7 @@
     aria-hidden="true"
   >
     <svg
+      id="hero-grid-svg"
       class="h-full w-full object-cover"
       viewBox="0 0 560 720"
       fill="none"
@@ -32,9 +34,15 @@
           <stop offset="100%" stop-color="currentColor" stop-opacity="0.08"
           ></stop>
         </linearGradient>
+        <radialGradient id="crn-glow-grad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="currentColor" stop-opacity="0.14"
+          ></stop>
+          <stop offset="100%" stop-color="currentColor" stop-opacity="0"></stop>
+        </radialGradient>
       </defs>
       <rect width="560" height="720" fill="url(#crn-grid)"></rect>
       <line
+        id="crn-line-h1"
         x1="0"
         y1="180"
         x2="560"
@@ -42,6 +50,7 @@
         stroke="currentColor"
         stroke-width="0.75"></line>
       <line
+        id="crn-line-h2"
         x1="0"
         y1="360"
         x2="560"
@@ -49,6 +58,7 @@
         stroke="currentColor"
         stroke-width="0.75"></line>
       <line
+        id="crn-line-h3"
         x1="0"
         y1="540"
         x2="560"
@@ -56,6 +66,7 @@
         stroke="currentColor"
         stroke-width="0.75"></line>
       <line
+        id="crn-line-v1"
         x1="140"
         y1="0"
         x2="140"
@@ -63,6 +74,7 @@
         stroke="currentColor"
         stroke-width="0.75"></line>
       <line
+        id="crn-line-v2"
         x1="280"
         y1="0"
         x2="280"
@@ -70,18 +82,42 @@
         stroke="currentColor"
         stroke-width="0.75"></line>
       <line
+        id="crn-line-v3"
         x1="420"
         y1="0"
         x2="420"
         y2="720"
         stroke="currentColor"
         stroke-width="0.75"></line>
-      <circle cx="280" cy="180" r="4" fill="currentColor" opacity="0.4"
-      ></circle>
-      <circle cx="420" cy="360" r="4" fill="currentColor" opacity="0.3"
-      ></circle>
-      <circle cx="140" cy="540" r="4" fill="currentColor" opacity="0.25"
-      ></circle>
+      <circle
+        id="crn-node-1"
+        cx="280"
+        cy="180"
+        r="4"
+        fill="currentColor"
+        opacity="0.4"></circle>
+      <circle
+        id="crn-node-2"
+        cx="420"
+        cy="360"
+        r="4"
+        fill="currentColor"
+        opacity="0.3"></circle>
+      <circle
+        id="crn-node-3"
+        cx="140"
+        cy="540"
+        r="4"
+        fill="currentColor"
+        opacity="0.25"></circle>
+      <circle
+        id="crn-glow"
+        cx="0"
+        cy="0"
+        r="70"
+        fill="url(#crn-glow-grad)"
+        opacity="0"
+        pointer-events="none"></circle>
       <path
         d="M 40 40 L 40 60 M 40 40 L 60 40"
         stroke="currentColor"
@@ -122,6 +158,14 @@
         Board-ready governance for AI, data, and cloud programs
       </h1>
 
+      <div
+        id="hero-accent-rule"
+        class="bg-accent-500 mb-8 h-px origin-left scale-x-0"
+        style="width: 6rem;"
+        aria-hidden="true"
+      >
+      </div>
+
       <p
         id="hero-description"
         class="mb-10 max-w-[60ch] font-sans text-lg leading-[1.65] text-neutral-300"
@@ -157,28 +201,260 @@
       "(prefers-reduced-motion: reduce)",
     ).matches;
 
-    const targets = [
-      "#hero-eyebrow",
-      "#hero-title",
-      "#hero-description",
-      "#hero-cta",
-      "#hero-briefing-note",
-    ];
-
     if (!prefersReducedMotion) {
-      gsap.fromTo(
-        targets,
-        { opacity: 0, y: 14 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.7,
-          ease: "power2.out",
-          stagger: { amount: 0.5, from: "start" },
-        },
+      const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
+
+      tl.fromTo(
+        "#hero-eyebrow",
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: 0.6 },
+        0,
       );
+
+      const headline = document.querySelector<HTMLElement>("#hero-title");
+      if (headline) {
+        const headlineWords = headline.textContent.trim().split(/\s+/);
+        headline.innerHTML = headlineWords
+          .map(
+            (w) =>
+              `<span class="crn-word" style="display: inline-block; overflow: hidden; vertical-align: bottom;"><span class="crn-word-inner" style="display: inline-block; clip-path: inset(0 100% 0 0);">${w}</span></span>`,
+          )
+          .join(" ");
+      }
+
+      const wordInners = document.querySelectorAll(".crn-word-inner");
+      tl.to(
+        wordInners,
+        {
+          clipPath: "inset(0 0% 0 0)",
+          duration: 0.5,
+          ease: "power3.out",
+          stagger: 0.06,
+        },
+        0.2,
+      );
+
+      tl.fromTo(
+        "#hero-accent-rule",
+        { scaleX: 0 },
+        { scaleX: 1, duration: 0.5, ease: "power3.inOut" },
+        0.85,
+      );
+
+      tl.fromTo(
+        "#hero-description",
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: 0.6 },
+        1.0,
+      );
+
+      tl.fromTo(
+        "#hero-cta",
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: 0.6 },
+        1.2,
+      );
+
+      tl.fromTo(
+        "#hero-briefing-note",
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.6 },
+        1.4,
+      );
+
+      // ── Magnetic Grid ─────────────────────────────────────────────────────
+      const svgEl = document.querySelector<SVGElement>("#hero-grid-svg")!;
+      const glowEl = document.getElementById("crn-glow")!;
+      const lineH1 = document.getElementById(
+        "crn-line-h1",
+      ) as unknown as SVGLineElement;
+      const lineH2 = document.getElementById(
+        "crn-line-h2",
+      ) as unknown as SVGLineElement;
+      const lineH3 = document.getElementById(
+        "crn-line-h3",
+      ) as unknown as SVGLineElement;
+      const lineV1 = document.getElementById(
+        "crn-line-v1",
+      ) as unknown as SVGLineElement;
+      const lineV2 = document.getElementById(
+        "crn-line-v2",
+      ) as unknown as SVGLineElement;
+      const lineV3 = document.getElementById(
+        "crn-line-v3",
+      ) as unknown as SVGLineElement;
+      const node1 = document.getElementById(
+        "crn-node-1",
+      ) as unknown as SVGCircleElement;
+      const node2 = document.getElementById(
+        "crn-node-2",
+      ) as unknown as SVGCircleElement;
+      const node3 = document.getElementById(
+        "crn-node-3",
+      ) as unknown as SVGCircleElement;
+
+      const VB_W = 560;
+      const VB_H = 720;
+      const RADIUS = 150;
+      const MAX_DISP = 4.5;
+
+      interface NodeRef {
+        el: SVGCircleElement;
+        cx: number;
+        cy: number;
+        baseOpacity: string;
+      }
+
+      const nodes: NodeRef[] = [
+        { el: node1, cx: 280, cy: 180, baseOpacity: "0.4" },
+        { el: node2, cx: 420, cy: 360, baseOpacity: "0.3" },
+        { el: node3, cx: 140, cy: 540, baseOpacity: "0.25" },
+      ];
+
+      const horizLines: [SVGLineElement, number][] = [
+        [lineH1, 180],
+        [lineH2, 360],
+        [lineH3, 540],
+      ];
+
+      const vertLines: [SVGLineElement, number][] = [
+        [lineV1, 140],
+        [lineV2, 280],
+        [lineV3, 420],
+      ];
+
+      let raf: number | null = null;
+      let targetX = -1000;
+      let targetY = -1000;
+      let currentX = -1000;
+      let currentY = -1000;
+
+      function toSvgCoords(clientX: number, clientY: number) {
+        const rect = svgEl.getBoundingClientRect();
+        return {
+          x: ((clientX - rect.left) / rect.width) * VB_W,
+          y: ((clientY - rect.top) / rect.height) * VB_H,
+        };
+      }
+
+      function applyMagnetic(sx: number, sy: number) {
+        glowEl.setAttribute("cx", String(sx));
+        glowEl.setAttribute("cy", String(sy));
+        glowEl.setAttribute("opacity", "1");
+
+        for (const [el, y] of horizLines) {
+          const dist = Math.abs(sy - y);
+          if (dist < RADIUS) {
+            const t = 1 - dist / RADIUS;
+            const disp = t * t * MAX_DISP;
+            const dir = sy > y ? 1 : -1;
+            el.style.transform = `translate(0, ${dir * disp}px)`;
+            el.style.transformOrigin = `${sx}px ${y}px`;
+            el.style.opacity = String(0.75 + t * 0.25);
+          } else {
+            el.style.transform = "";
+            el.style.transformOrigin = "";
+            el.style.opacity = "0.75";
+          }
+        }
+
+        for (const [el, x] of vertLines) {
+          const dist = Math.abs(sx - x);
+          if (dist < RADIUS) {
+            const t = 1 - dist / RADIUS;
+            const disp = t * t * MAX_DISP;
+            const dir = sx > x ? 1 : -1;
+            el.style.transform = `translate(${dir * disp}px, 0)`;
+            el.style.transformOrigin = `${x}px ${sy}px`;
+            el.style.opacity = String(0.75 + t * 0.25);
+          } else {
+            el.style.transform = "";
+            el.style.transformOrigin = "";
+            el.style.opacity = "0.75";
+          }
+        }
+
+        for (const { el, cx, cy, baseOpacity } of nodes) {
+          const dx = sx - cx;
+          const dy = sy - cy;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 100) {
+            const t = 1 - dist / 100;
+            const scale = 1 + t * 0.6;
+            el.setAttribute("opacity", String(0.25 + t * 0.6));
+            el.setAttribute("r", String(4 * scale));
+          } else {
+            el.setAttribute("opacity", baseOpacity);
+            el.setAttribute("r", "4");
+          }
+        }
+      }
+
+      function resetMagnetic() {
+        glowEl.setAttribute("opacity", "0");
+        for (const [el] of horizLines) {
+          el.style.transform = "";
+          el.style.transformOrigin = "";
+          el.style.opacity = "0.75";
+        }
+        for (const [el] of vertLines) {
+          el.style.transform = "";
+          el.style.transformOrigin = "";
+          el.style.opacity = "0.75";
+        }
+        for (const { el, baseOpacity } of nodes) {
+          el.setAttribute("opacity", baseOpacity);
+          el.setAttribute("r", "4");
+        }
+      }
+
+      const heroSection = document.getElementById("hero-section")!;
+
+      let isInside = false;
+
+      heroSection.addEventListener(
+        "mousemove",
+        (e: MouseEvent) => {
+          const { x, y } = toSvgCoords(e.clientX, e.clientY);
+          targetX = x;
+          targetY = y;
+          if (!isInside) {
+            isInside = true;
+            if (raf === null) raf = requestAnimationFrame(tick);
+          }
+        },
+        { passive: true },
+      );
+
+      heroSection.addEventListener("mouseleave", () => {
+        isInside = false;
+        targetX = -1000;
+        targetY = -1000;
+        resetMagnetic();
+      });
+
+      function tick() {
+        if (!isInside) {
+          raf = null;
+          return;
+        }
+        currentX += (targetX - currentX) * 0.12;
+        currentY += (targetY - currentY) * 0.12;
+        applyMagnetic(currentX, currentY);
+        raf = requestAnimationFrame(tick);
+      }
     } else {
-      gsap.set(targets, { opacity: 1, y: 0 });
+      gsap.set(
+        [
+          "#hero-eyebrow",
+          "#hero-title .crn-word-inner",
+          "#hero-description",
+          "#hero-cta",
+          "#hero-briefing-note",
+        ],
+        { opacity: 1, y: 0 },
+      );
+      gsap.set("#hero-accent-rule", { scaleX: 1 });
     }
   </script>
 </section>
