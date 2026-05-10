@@ -47,7 +47,8 @@ const helper =
 let allStudies: CaseStudy[] = [];
 try {
   const raw = import.meta.glob("../data/*.jsonl", {
-    as: "raw",
+    query: "?raw",
+    import: "default",
     eager: true,
   });
   const content = Object.values(raw)[0];
