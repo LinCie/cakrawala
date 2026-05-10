@@ -4,9 +4,9 @@
 // 3-beat structure: next-step explainer → contact options → authority CTA
 ---
 
-<section class="section-shell py-20 lg:py-28">
+<section id="final-cta" class="section-shell py-20 lg:py-28">
   <!-- Beat 1: Next-step explainer -->
-  <div class="mb-16 max-w-3xl">
+  <div class="mb-16 max-w-3xl" data-fcta-intro>
     <p
       class="text-accent-700 text-caption mb-4 font-semibold tracking-wide uppercase"
     >
@@ -25,7 +25,7 @@
 
     <!-- 3-step process -->
     <div class="grid gap-6 sm:grid-cols-3">
-      <div class="flex flex-col">
+      <div class="flex flex-col" data-fcta-step>
         <span class="text-data text-brand-700 mb-2 font-bold">1</span>
         <h3 class="text-title text-brand-900 mb-2 font-semibold">
           Review Context
@@ -35,7 +35,7 @@
           current-state architecture.
         </p>
       </div>
-      <div class="flex flex-col">
+      <div class="flex flex-col" data-fcta-step>
         <span class="text-data text-brand-700 mb-2 font-bold">2</span>
         <h3 class="text-title text-brand-900 mb-2 font-semibold">
           Align Stakeholders
@@ -45,7 +45,7 @@
           teams need.
         </p>
       </div>
-      <div class="flex flex-col">
+      <div class="flex flex-col" data-fcta-step>
         <span class="text-data text-brand-700 mb-2 font-bold">3</span>
         <h3 class="text-title text-brand-900 mb-2 font-semibold">
           Define the Evidence Pack
@@ -59,7 +59,7 @@
   </div>
 
   <!-- Beat 2: Short contact options -->
-  <div class="mb-16 border-t border-neutral-200 pt-12">
+  <div class="mb-16 border-t border-neutral-200 pt-12" data-fcta-paths>
     <p
       class="text-body-sm mb-6 font-medium tracking-wide text-neutral-600 uppercase"
     >
@@ -88,7 +88,10 @@
   </div>
 
   <!-- Beat 3: Final authority CTA panel -->
-  <div class="rounded-panel bg-brand-950 px-8 py-12 lg:px-12 lg:py-16">
+  <div
+    class="rounded-panel bg-brand-950 px-8 py-12 lg:px-12 lg:py-16"
+    data-fcta-panel
+  >
     <div class="max-w-2xl">
       <p
         class="text-accent-500 text-caption mb-4 font-semibold tracking-wide uppercase"
@@ -139,3 +142,86 @@
     max-width: 72ch;
   }
 </style>
+
+<script>
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  const section = document.getElementById("final-cta");
+  if (!section) throw new Error("final-cta section not found");
+
+  const intro = section.querySelector<HTMLElement>("[data-fcta-intro]");
+  const steps = section.querySelectorAll<HTMLElement>("[data-fcta-step]");
+  const paths = section.querySelector<HTMLElement>("[data-fcta-paths]");
+  const panel = section.querySelector<HTMLElement>("[data-fcta-panel]");
+
+  const allTargets = [intro, ...steps, paths, panel].filter(
+    Boolean,
+  ) as HTMLElement[];
+
+  if (prefersReducedMotion) {
+    void (async () => {
+      const [{ default: gsap }, { ScrollTrigger }] = await Promise.all([
+        import("gsap"),
+        import("gsap/ScrollTrigger"),
+      ]);
+      gsap.registerPlugin(ScrollTrigger);
+      gsap.set(allTargets, { opacity: 1, y: 0 });
+    })();
+  } else {
+    void (async () => {
+      const [{ default: gsap }, { ScrollTrigger }] = await Promise.all([
+        import("gsap"),
+        import("gsap/ScrollTrigger"),
+      ]);
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top 75%",
+          once: true,
+        },
+        defaults: { ease: "power2.out" },
+      });
+
+      if (intro) {
+        tl.fromTo(
+          intro.children,
+          { opacity: 0, y: 12 },
+          { opacity: 1, y: 0, duration: 0.45, stagger: 0.08 },
+          0,
+        );
+      }
+
+      if (steps.length) {
+        tl.fromTo(
+          steps,
+          { opacity: 0, y: 14 },
+          { opacity: 1, y: 0, duration: 0.4, stagger: 0.1, ease: "power3.out" },
+          0.25,
+        );
+      }
+
+      if (paths) {
+        tl.fromTo(
+          paths,
+          { opacity: 0, y: 12 },
+          { opacity: 1, y: 0, duration: 0.4 },
+          0.5,
+        );
+      }
+
+      if (panel) {
+        tl.fromTo(
+          panel,
+          { opacity: 0, y: 16 },
+          { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" },
+          0.65,
+        );
+      }
+    })();
+  }
+</script>

@@ -259,7 +259,7 @@ const formatStudyMeta = (study: CaseStudy) =>
     "(prefers-reduced-motion: reduce)",
   ).matches;
 
-  const section = document.getElementById("case-study-preview");
+  const section = document.getElementById("case-studies");
   if (section && !prefersReducedMotion) {
     let timeline: gsap.core.Timeline | undefined;
     let scrollTrigger: ScrollTrigger | undefined;
@@ -318,6 +318,7 @@ const formatStudyMeta = (study: CaseStudy) =>
             y: 0,
             duration: 0.45,
             stagger: 0.12,
+            ease: "power3.out",
           },
           0.3,
         );

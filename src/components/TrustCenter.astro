@@ -230,24 +230,64 @@ const reviewSteps = [
     "(prefers-reduced-motion: reduce)",
   ).matches;
 
-  if (!prefersReducedMotion) {
+  const section = document.getElementById("trust-center");
+  if (!section) throw new Error("trust-center section not found");
+
+  const leftCol = section.querySelector<HTMLElement>(
+    ":scope > div > div:first-child",
+  );
+  const rightCards = section.querySelectorAll<HTMLElement>("[data-trust-node]");
+
+  if (prefersReducedMotion) {
     void import("gsap").then(async ({ gsap }) => {
       const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+      gsap.registerPlugin(ScrollTrigger);
+      gsap.set([leftCol, ...rightCards].filter(Boolean), {
+        opacity: 1,
+        y: 0,
+      });
+    });
+  } else {
+    void (async () => {
+      const [{ default: gsap }, { ScrollTrigger }] = await Promise.all([
+        import("gsap"),
+        import("gsap/ScrollTrigger"),
+      ]);
 
       gsap.registerPlugin(ScrollTrigger);
 
-      gsap.from("[data-trust-node]", {
+      const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: "#trust-center",
-          start: "top 80%",
+          trigger: section,
+          start: "top 75%",
           once: true,
         },
-        opacity: 0,
-        y: 20,
-        duration: 0.5,
-        stagger: 0.1,
-        ease: "power2.out",
+        defaults: { ease: "power2.out" },
       });
-    });
+
+      if (leftCol) {
+        tl.fromTo(
+          leftCol.children,
+          { opacity: 0, y: 12 },
+          { opacity: 1, y: 0, duration: 0.45, stagger: 0.08 },
+          0,
+        );
+      }
+
+      if (rightCards.length) {
+        tl.fromTo(
+          rightCards,
+          { opacity: 0, y: 16 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.45,
+            stagger: 0.1,
+            ease: "power3.out",
+          },
+          0.18,
+        );
+      }
+    })();
   }
 </script>

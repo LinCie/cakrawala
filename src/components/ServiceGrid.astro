@@ -411,8 +411,8 @@ const capabilityPaths: CapabilityPath[] = [
     "(prefers-reduced-motion: reduce)",
   ).matches;
 
-  const section = document.getElementById("service-grid");
-  if (!section) throw new Error("service-grid section not found");
+  const section = document.getElementById("services");
+  if (!section) throw new Error("services section not found");
 
   const header = section.querySelector<HTMLElement>("[data-sg-header]");
   const panels = section.querySelectorAll<HTMLElement>("[data-sg-panel]");
@@ -432,9 +432,9 @@ const capabilityPaths: CapabilityPath[] = [
 
     if (header) {
       tl.fromTo(
-        header,
+        header.children,
         { opacity: 0, y: 14 },
-        { opacity: 1, y: 0, duration: 0.5 },
+        { opacity: 1, y: 0, duration: 0.5, stagger: 0.1 },
         0,
       );
     }
