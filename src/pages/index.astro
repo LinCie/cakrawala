@@ -11,6 +11,7 @@ import Differentiators from "../components/Differentiators.astro";
 import CaseStudyPreview from "../components/CaseStudyPreview.astro";
 import TrustCenter from "../components/TrustCenter.astro";
 import InsightsPreview from "../components/InsightsPreview.astro";
+import FinalCta from "../components/FinalCta.astro";
 ---
 
 <!doctype html>
@@ -51,29 +52,7 @@ import InsightsPreview from "../components/InsightsPreview.astro";
       <CaseStudyPreview />
       <TrustCenter />
       <InsightsPreview />
-      <section
-        id="contact"
-        class="flex h-screen items-center justify-center px-6 text-center"
-      >
-        <div class="max-w-[42rem]">
-          <p
-            class="text-accent-700 mb-3 text-[0.6875rem] font-semibold tracking-[0.12em] uppercase"
-          >
-            Contact
-          </p>
-          <h2
-            class="font-display text-h2 text-brand-900 leading-[1.05] font-semibold tracking-[-0.025em] dark:text-neutral-100"
-          >
-            Start the conversation with CRN Advisory Systems.
-          </h2>
-          <p
-            class="text-body-lg mt-5 leading-[1.7] text-neutral-600 dark:text-neutral-300"
-          >
-            Bring us the program, policy, or control problem. We will help shape
-            the operating decision and the evidence package.
-          </p>
-        </div>
-      </section>
+      <FinalCta />
     </main>
   </body>
 </html>
