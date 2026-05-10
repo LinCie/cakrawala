@@ -9,6 +9,7 @@ import ServiceGrid from "../components/ServiceGrid.astro";
 import IndustryFocus from "../components/IndustryFocus.astro";
 import Differentiators from "../components/Differentiators.astro";
 import CaseStudyPreview from "../components/CaseStudyPreview.astro";
+import TrustCenter from "../components/TrustCenter.astro";
 ---
 
 <!doctype html>
@@ -47,8 +48,9 @@ import CaseStudyPreview from "../components/CaseStudyPreview.astro";
       <IndustryFocus />
       <Differentiators />
       <CaseStudyPreview />
+      <TrustCenter />
       {
-        ["Trust Center", "Insights Preview", "Final CTA"].map((section) => (
+        ["Insights Preview", "Final CTA"].map((section) => (
           <section class="flex h-screen items-center justify-center px-6 text-center">
             <p>{section}</p>
           </section>

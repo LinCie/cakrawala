@@ -1,0 +1,253 @@
+---
+// Trust Center homepage section
+// Reassurance after proof: procurement confidence without vault coldness
+
+const featuredDocument = {
+  title: "Security Overview",
+  format: "PDF",
+  pages: "14 pages",
+  updated: "Updated Feb 2026",
+  scope: "Controls, access, incident response, and vulnerability handling",
+};
+
+const evidenceRows = [
+  {
+    label: "Privacy",
+    value: "PDP-ready handling, processor obligations, and retention guidance",
+  },
+  {
+    label: "Compliance",
+    value: "ISO 27001 and ISO 27701 mapping for regulated enterprise review",
+  },
+  {
+    label: "AI governance",
+    value: "Policy, model risk controls, and human oversight requirements",
+  },
+];
+
+const reviewSteps = [
+  "Open the document set for your function: security, procurement, legal, or risk.",
+  "Check scope, last update, and control coverage before requesting a follow-up.",
+  "Use the Trust Center when you need the wider package or deeper evidence trail.",
+];
+---
+
+<section
+  id="trust-center"
+  class="section-shell bg-surface py-section-sm dark:bg-surface-inverse lg:py-section-md"
+  aria-labelledby="trust-center-title"
+>
+  <div class="grid gap-12 lg:grid-cols-12 lg:gap-16">
+    <!-- Left zone: Content -->
+    <div class="lg:col-span-5">
+      <p
+        class="text-caption text-accent-700 dark:text-accent-500 mb-4 font-medium tracking-wide uppercase"
+        data-trust-node
+      >
+        Trust Center
+      </p>
+      <h2
+        id="trust-center-title"
+        class="font-display text-h3 text-brand-900 mb-6 font-semibold tracking-tight dark:text-neutral-100"
+        data-trust-node
+      >
+        Procurement-ready evidence for regulated review.
+      </h2>
+      <p
+        class="text-readable text-body mb-8 leading-relaxed text-neutral-700 dark:text-neutral-300"
+        data-trust-node
+      >
+        Security, privacy, and responsible AI materials are organized for CISO,
+        procurement, legal, and risk review, with document metadata and control
+        scope up front.
+      </p>
+
+      <!-- CTAs -->
+      <div class="flex flex-wrap items-center gap-4" data-trust-node>
+        <a
+          href="/trust-center"
+          class="focus-enterprise bg-brand-700 hover:bg-brand-900 rounded-button shadow-button duration-fast inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold text-white transition-colors dark:shadow-none"
+        >
+          <svg
+            class="size-5 shrink-0"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9 12h6m-3-3 3 3-3 3m7 2.5A2.5 2.5 0 0119.5 19H4.5A2.5 2.5 0 012 16.5v-9A2.5 2.5 0 014.5 5h15A2.5 2.5 0 0122 7.5v9z"
+            ></path>
+          </svg>
+          Review Trust Center
+        </a>
+      </div>
+    </div>
+
+    <!-- Right zone: Evidence items -->
+    <div class="lg:col-span-7">
+      <div class="grid gap-4 lg:grid-cols-12">
+        <div
+          class="rounded-card enterprise-ring dark:bg-brand-950/40 bg-neutral-50/80 p-6 lg:col-span-12"
+          data-trust-node
+        >
+          <div class="flex items-start justify-between gap-6">
+            <div class="max-w-[26rem]">
+              <p
+                class="text-caption text-accent-700 dark:text-accent-500 mb-3 font-medium tracking-wide uppercase"
+              >
+                Featured document
+              </p>
+              <h3
+                class="text-brand-900 mb-2 text-xl font-semibold tracking-tight dark:text-neutral-100"
+              >
+                {featuredDocument.title}
+              </h3>
+              <p
+                class="text-sm leading-relaxed text-neutral-600 dark:text-neutral-300"
+              >
+                The first artifact to review. It sets the scope for control
+                coverage, operating boundaries, and diligence follow-up.
+              </p>
+            </div>
+          </div>
+
+          <dl
+            class="mt-6 grid gap-3 border-t border-neutral-200 pt-5 sm:grid-cols-3 dark:border-white/10"
+          >
+            <div>
+              <dt
+                class="text-caption text-neutral-600 uppercase dark:text-neutral-400"
+              >
+                Format
+              </dt>
+              <dd
+                class="text-brand-900 mt-1 text-sm font-medium dark:text-neutral-100"
+              >
+                {featuredDocument.format}
+              </dd>
+            </div>
+            <div>
+              <dt
+                class="text-caption text-neutral-600 uppercase dark:text-neutral-400"
+              >
+                Length
+              </dt>
+              <dd
+                class="text-brand-900 mt-1 text-sm font-medium dark:text-neutral-100"
+              >
+                {featuredDocument.pages}
+              </dd>
+            </div>
+            <div>
+              <dt
+                class="text-caption text-neutral-600 uppercase dark:text-neutral-400"
+              >
+                Status
+              </dt>
+              <dd
+                class="text-brand-900 mt-1 text-sm font-medium dark:text-neutral-100"
+              >
+                {featuredDocument.updated}
+              </dd>
+            </div>
+          </dl>
+
+          <p
+            class="mt-4 max-w-[60ch] text-sm leading-relaxed text-neutral-600 dark:text-neutral-300"
+          >
+            {featuredDocument.scope}
+          </p>
+        </div>
+
+        <div
+          class="rounded-card enterprise-ring bg-surface dark:bg-brand-950/20 p-6 lg:col-span-7"
+          data-trust-node
+        >
+          <p
+            class="text-caption text-accent-700 dark:text-accent-500 mb-4 font-medium tracking-wide uppercase"
+          >
+            Evidence map
+          </p>
+          <div class="space-y-4">
+            {
+              evidenceRows.map((row) => (
+                <div class="border-b border-neutral-200 pb-4 last:border-0 last:pb-0 dark:border-white/10">
+                  <div class="grid gap-1 sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-4">
+                    <span class="text-brand-900 text-sm font-semibold dark:text-neutral-100">
+                      {row.label}
+                    </span>
+                    <p class="text-sm leading-relaxed text-neutral-600 dark:text-neutral-300">
+                      {row.value}
+                    </p>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+
+        <div
+          class="rounded-card enterprise-ring bg-brand-950 p-6 text-white lg:col-span-5 dark:bg-neutral-50 dark:text-neutral-900"
+          data-trust-node
+        >
+          <p
+            class="text-caption text-accent-500 dark:text-accent-700 mb-4 font-medium tracking-wide uppercase"
+          >
+            Review path
+          </p>
+          <ol class="space-y-4">
+            {
+              reviewSteps.map((step, index) => (
+                <li class="flex gap-4">
+                  <span class="text-accent-500 font-mono text-sm font-semibold">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <p class="text-sm leading-relaxed text-neutral-200 dark:text-neutral-700">
+                    {step}
+                  </p>
+                </li>
+              ))
+            }
+          </ol>
+          <p
+            class="mt-5 max-w-[34ch] text-sm leading-relaxed text-neutral-300 dark:text-neutral-600"
+          >
+            If a stakeholder needs more detail, the next step is a scoped
+            review, not a generic sales conversation.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  if (!prefersReducedMotion) {
+    void import("gsap").then(async ({ gsap }) => {
+      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      gsap.from("[data-trust-node]", {
+        scrollTrigger: {
+          trigger: "#trust-center",
+          start: "top 80%",
+          once: true,
+        },
+        opacity: 0,
+        y: 20,
+        duration: 0.5,
+        stagger: 0.1,
+        ease: "power2.out",
+      });
+    });
+  }
+</script>
