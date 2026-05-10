@@ -2,22 +2,33 @@
 import "../styles/global.css";
 
 const navLinks = [
-  { label: "Services", href: "#services" },
-  { label: "About", href: "#about" },
-  { label: "Case Studies", href: "#case-studies" },
-  { label: "Trust Center", href: "#trust" },
+  { label: "Services", href: "/services" },
+  { label: "Industries", href: "/industries" },
+  { label: "Case Studies", href: "/case-studies" },
+  { label: "Trust Center", href: "/trust-center" },
 ];
+
+const currentPath = Astro.url.pathname;
+const isIndustries = currentPath.startsWith("/industries");
+const isCurrent = (href: string) => {
+  if (href === "/services") return currentPath.startsWith("/services");
+  if (href === "/industries") return isIndustries;
+  if (href === "/case-studies") return currentPath.startsWith("/case-studies");
+  if (href === "/trust-center") return currentPath.startsWith("/trust-center");
+  return false;
+};
 ---
 
 <header
-  class="dark:border-brand-700/20 fixed top-0 right-0 left-0 z-[var(--z-header)] h-[var(--crn-header-height)] border-b border-neutral-200/50 bg-white/85 backdrop-blur-[12px] dark:bg-[var(--color-surface-inverse)]/85"
+  class="dark:border-brand-700/20 fixed top-0 right-0 left-0 z-[var(--z-header)] border-b border-neutral-200/60 bg-white/88 backdrop-blur-[14px] dark:bg-[var(--color-surface-inverse)]/88"
+  data-header
 >
   <div
-    class="mx-auto flex h-full max-w-[var(--container-enterprise)] items-center gap-8 px-6"
+    class="mx-auto flex h-[var(--crn-header-height)] max-w-[var(--container-enterprise)] items-center gap-4 px-6 lg:gap-8"
   >
     <a
       href="/"
-      class="flex shrink-0 items-center gap-3 no-underline"
+      class="flex min-h-11 shrink-0 items-center gap-3 no-underline"
       aria-label="CRN Advisory Systems home"
     >
       <svg
@@ -44,13 +55,19 @@ const navLinks = [
       class="hidden flex-1 justify-center lg:flex"
       aria-label="Main navigation"
     >
-      <ul class="m-0 flex list-none gap-1 p-0">
+      <ul class="m-0 flex list-none items-center gap-1 p-0">
         {
           navLinks.map((link) => (
             <li>
               <a
                 href={link.href}
-                class="dark:hover:bg-brand-700/15 block rounded-lg px-[0.875rem] py-2 text-[0.875rem] font-medium text-neutral-700 no-underline transition-colors duration-[var(--duration-fast)] hover:bg-neutral-100 dark:text-neutral-400 dark:hover:text-neutral-100"
+                aria-current={isCurrent(link.href) ? "page" : undefined}
+                class:list={[
+                  "block rounded-full px-[0.95rem] py-2 text-[0.875rem] font-medium no-underline transition-colors duration-[var(--duration-fast)]",
+                  isCurrent(link.href)
+                    ? "bg-brand-50 text-brand-900 dark:bg-brand-900/30 dark:text-neutral-100"
+                    : "dark:hover:bg-brand-700/15 text-neutral-700 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:text-neutral-100",
+                ]}
               >
                 {link.label}
               </a>
@@ -61,17 +78,18 @@ const navLinks = [
     </nav>
 
     <a
-      href="/#hero-briefing-note"
-      class="bg-brand-700 hover:bg-brand-900 focus-visible:outline-brand-500 hidden items-center justify-center rounded-[999px] px-5 py-[0.625rem] text-[0.875rem] font-semibold text-white no-underline shadow-[var(--shadow-button)] transition-colors duration-[var(--duration-fast)] focus-visible:outline-2 focus-visible:outline-offset-2 lg:inline-flex"
+      href="/briefing"
+      class="bg-brand-700 hover:bg-brand-900 focus-visible:outline-brand-500 hidden min-h-11 items-center justify-center rounded-[999px] px-5 py-[0.625rem] text-[0.875rem] font-semibold text-white no-underline shadow-[var(--shadow-button)] transition-colors duration-[var(--duration-fast)] focus-visible:outline-2 focus-visible:outline-offset-2 lg:inline-flex"
     >
       Schedule Briefing
     </a>
 
     <button
-      class="dark:hover:bg-brand-700/15 ml-auto flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent p-0 text-neutral-700 transition-colors duration-[var(--duration-fast)] hover:bg-neutral-100 lg:hidden dark:text-neutral-300"
+      class="dark:hover:bg-brand-700/15 ml-auto flex min-h-11 min-w-11 cursor-pointer items-center justify-center rounded-full border-none bg-transparent p-0 text-neutral-700 transition-colors duration-[var(--duration-fast)] hover:bg-neutral-100 lg:hidden dark:text-neutral-300"
       aria-label="Toggle navigation"
       aria-expanded="false"
       aria-controls="mobile-nav"
+      data-mobile-nav-toggle
     >
       <svg
         width="24"
@@ -79,56 +97,271 @@ const navLinks = [
         viewBox="0 0 24 24"
         fill="none"
         aria-hidden="true"
+        class="overflow-visible"
       >
         <path
-          d="M3 12h18M3 6h18M3 18h18"
+          data-hamburger-top
+          d="M3 6h18"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          style="transform-origin: center"></path>
+        <path
+          data-hamburger-mid
+          d="M3 12h18"
           stroke="currentColor"
           stroke-width="2"
           stroke-linecap="round"></path>
+        <path
+          data-hamburger-bot
+          d="M3 18h18"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          style="transform-origin: center"></path>
       </svg>
     </button>
   </div>
 
   <nav
     id="mobile-nav"
-    class="dark:border-brand-800 absolute top-[var(--crn-header-height)] right-0 left-0 border-b border-neutral-200 bg-white p-6 shadow-[var(--shadow-elevated)] lg:hidden dark:bg-[var(--color-surface-inverse)]"
+    class="dark:border-brand-800 absolute top-full right-0 left-0 border-b border-neutral-200 bg-white shadow-[var(--shadow-elevated)] lg:hidden dark:bg-[var(--color-surface-inverse)]"
     aria-label="Mobile navigation"
-    hidden
+    inert
+    data-mobile-nav
   >
-    <ul class="m-0 flex list-none flex-col gap-1 p-0">
-      {
-        navLinks.map((link) => (
-          <li>
-            <a
-              href={link.href}
-              class="dark:hover:bg-brand-700/15 block rounded-lg px-4 py-3 text-base font-medium text-neutral-700 no-underline transition-colors duration-[var(--duration-fast)] hover:bg-neutral-100 dark:text-neutral-300"
-            >
-              {link.label}
-            </a>
-          </li>
-        ))
-      }
-      <li>
-        <a
-          href="/#hero-briefing-note"
-          class="text-brand-700 dark:text-accent-500 mt-2 block rounded-lg px-4 py-3 text-base font-semibold no-underline"
-        >
-          Schedule Briefing
-        </a>
-      </li>
-    </ul>
+    <div
+      class="dark:border-brand-700/20 border-t border-neutral-200/70 px-6 py-5"
+    >
+      <ul class="m-0 flex list-none flex-col gap-1 p-0">
+        {
+          navLinks.map((link) => (
+            <li data-nav-item>
+              <a
+                href={link.href}
+                aria-current={isCurrent(link.href) ? "page" : undefined}
+                class:list={[
+                  "block rounded-[0.9rem] px-4 py-3 text-base font-medium no-underline transition-colors duration-[var(--duration-fast)]",
+                  isCurrent(link.href)
+                    ? "bg-brand-50 text-brand-900 dark:bg-brand-900/30 dark:text-neutral-100"
+                    : "dark:hover:bg-brand-700/15 text-neutral-700 hover:bg-neutral-100 dark:text-neutral-300 dark:hover:text-neutral-100",
+                ]}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+        <li data-nav-item>
+          <a
+            href="/briefing"
+            class="bg-brand-700 hover:bg-brand-900 focus-visible:outline-brand-500 mt-2 inline-flex min-h-11 w-full items-center justify-center rounded-[999px] px-4 py-3 text-base font-semibold text-white no-underline shadow-[var(--shadow-button)] transition-colors duration-[var(--duration-fast)] focus-visible:outline-2 focus-visible:outline-offset-2"
+          >
+            Schedule Briefing
+          </a>
+        </li>
+      </ul>
+    </div>
   </nav>
 </header>
 
 <script>
-  const toggle = document.querySelector<HTMLButtonElement>(".lg\\:hidden");
+  import gsap from "gsap";
+
+  const header = document.querySelector<HTMLElement>("[data-header]");
+  const toggle = document.querySelector<HTMLButtonElement>(
+    "[data-mobile-nav-toggle]",
+  );
   const mobileNav = document.getElementById("mobile-nav");
 
-  if (toggle && mobileNav) {
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  );
+
+  const OPEN_DURATION = 420;
+  const CLOSE_DURATION = 280;
+  const STAGGER = 55;
+
+  if (header && toggle && mobileNav) {
+    const navItems = mobileNav.querySelectorAll("[data-nav-item]");
+
+    gsap.set(mobileNav, {
+      clipPath: "inset(0 0 100% 0)",
+      opacity: 0,
+    });
+    gsap.set(navItems, { opacity: 0, y: 10 });
+
+    let isOpen = false;
+    let animating = false;
+
+    const animateOpen = () => {
+      isOpen = true;
+      animating = true;
+      mobileNav.removeAttribute("inert");
+      toggle.setAttribute("aria-expanded", "true");
+
+      if (prefersReducedMotion.matches) {
+        gsap.set(mobileNav, { clipPath: "inset(0 0 0% 0)", opacity: 1 });
+        gsap.set(navItems, { opacity: 1, y: 0 });
+        animating = false;
+        return;
+      }
+
+      const tl = gsap.timeline({
+        onComplete: () => {
+          animating = false;
+        },
+      });
+
+      tl.to(mobileNav, {
+        clipPath: "inset(0 0 0% 0)",
+        opacity: 1,
+        duration: OPEN_DURATION / 1000,
+        ease: "power3.out",
+      });
+
+      tl.to(
+        navItems,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.28,
+          ease: "power2.out",
+          stagger: STAGGER / 1000,
+        },
+        (OPEN_DURATION / 1000) * 0.35,
+      );
+
+      const topPath = toggle.querySelector("[data-hamburger-top]");
+      const midPath = toggle.querySelector("[data-hamburger-mid]");
+      const botPath = toggle.querySelector("[data-hamburger-bot]");
+
+      if (topPath && midPath && botPath) {
+        tl.to(midPath, { opacity: 0, duration: 0.12, ease: "power2.in" }, 0);
+        tl.to(
+          topPath,
+          {
+            attr: { d: "M6 6L18 18" },
+            duration: 0.25,
+            ease: "power2.out",
+          },
+          0.06,
+        );
+        tl.to(
+          botPath,
+          {
+            attr: { d: "M6 18L18 6" },
+            duration: 0.25,
+            ease: "power2.out",
+          },
+          0.06,
+        );
+      }
+    };
+
+    const animateClose = () => {
+      isOpen = false;
+      animating = true;
+
+      if (prefersReducedMotion.matches) {
+        gsap.set(mobileNav, { clipPath: "inset(0 0 100% 0)", opacity: 0 });
+        gsap.set(navItems, { opacity: 0, y: 10 });
+        mobileNav.setAttribute("inert", "");
+        toggle.setAttribute("aria-expanded", "false");
+        animating = false;
+        return;
+      }
+
+      const tl = gsap.timeline({
+        onComplete: () => {
+          mobileNav.setAttribute("inert", "");
+          animating = false;
+        },
+      });
+
+      tl.to(navItems, {
+        opacity: 0,
+        y: -6,
+        duration: 0.15,
+        ease: "power2.in",
+        stagger: 0.02,
+      });
+
+      tl.to(
+        mobileNav,
+        {
+          clipPath: "inset(0 0 100% 0)",
+          opacity: 0,
+          duration: CLOSE_DURATION / 1000,
+          ease: "power3.in",
+        },
+        0.08,
+      );
+
+      const topPath = toggle.querySelector("[data-hamburger-top]");
+      const midPath = toggle.querySelector("[data-hamburger-mid]");
+      const botPath = toggle.querySelector("[data-hamburger-bot]");
+
+      if (topPath && midPath && botPath) {
+        tl.to(
+          topPath,
+          {
+            attr: { d: "M3 6h18" },
+            duration: 0.2,
+            ease: "power2.out",
+          },
+          0.04,
+        );
+        tl.to(
+          botPath,
+          {
+            attr: { d: "M3 18h18" },
+            duration: 0.2,
+            ease: "power2.out",
+          },
+          0.04,
+        );
+        tl.to(midPath, { opacity: 1, duration: 0.12, ease: "power2.out" }, 0.1);
+      }
+    };
+
+    const closeNav = () => {
+      if (!isOpen || animating) return;
+      animateClose();
+    };
+
+    const openNav = () => {
+      if (isOpen || animating) return;
+      animateOpen();
+    };
+
     toggle.addEventListener("click", () => {
-      const isExpanded = toggle.getAttribute("aria-expanded") === "true";
-      toggle.setAttribute("aria-expanded", String(!isExpanded));
-      mobileNav.hidden = isExpanded;
+      if (animating) return;
+      if (isOpen) {
+        closeNav();
+      } else {
+        openNav();
+      }
+    });
+
+    mobileNav.addEventListener("click", (event) => {
+      const target = event.target;
+      if (target instanceof HTMLAnchorElement) {
+        closeNav();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        closeNav();
+      }
+    });
+
+    document.addEventListener("click", (event) => {
+      const target = event.target;
+      if (isOpen && target instanceof Node && !header.contains(target)) {
+        closeNav();
+      }
     });
   }
 </script>
