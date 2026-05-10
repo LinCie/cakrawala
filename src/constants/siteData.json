@@ -1,0 +1,36 @@
+{
+  "default": {
+    "title": "CRN Advisory Systems — Governed AI, Data & Cloud Transformation Indonesia",
+    "description": "Enterprise AI governance, data platform modernization, cloud risk, and digital resilience for Indonesian banks, manufacturers, and regulated enterprises.",
+    "openGraph": {
+      "basic": {
+        "title": "CRN Advisory Systems",
+        "type": "website",
+        "image": "/og-default.png"
+      },
+      "optional": {
+        "siteName": "CRN Advisory Systems",
+        "description": "Enterprise AI governance, data platforms, cloud risk, and digital resilience for Indonesian regulated enterprises."
+      }
+    },
+    "twitter": {
+      "card": "summary_large_image"
+    },
+    "noindex": false,
+    "nofollow": false
+  },
+  "pages": {
+    "home": {
+      "title": "CRN Advisory Systems — Governed AI, Data & Cloud Transformation Indonesia",
+      "description": "Enterprise AI governance, data platform modernization, cloud risk, and digital resilience for Indonesian banks, manufacturers, and regulated enterprises.",
+      "ogTitle": "CRN Advisory Systems — Governed AI & Data Transformation Indonesia",
+      "ogDescription": "Enterprise AI governance, data platforms, cloud risk, and digital resilience for Indonesian regulated enterprises."
+    },
+    "industries": {
+      "title": "Industries | CRN Advisory Systems",
+      "description": "Sector-specific AI, data, cloud, and resilience solutions for banking, manufacturing, logistics, energy, healthcare, telecommunications, SOEs, and conglomerates.",
+      "ogTitle": "Industry Solutions — CRN Advisory Systems",
+      "ogDescription": "Sector-specific enterprise transformation for Indonesian regulated industries"
+    }
+  }
+}

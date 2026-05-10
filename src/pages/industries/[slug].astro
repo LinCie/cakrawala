@@ -1,7 +1,5 @@
 ---
-import "../../styles/global.css";
-import Header from "../../components/Header.astro";
-import Footer from "../../components/Footer.astro";
+import Base from "../../layouts/Base.astro";
 import { industries, sectorClusterBySlug } from "../../data/industries";
 
 export function getStaticPaths() {
@@ -16,195 +14,228 @@ const { industry } = Astro.props as {
 };
 
 const cluster = sectorClusterBySlug[industry.slug];
+const siteUrl = Astro.site?.toString() || "https://crnadvisory.id";
+
+const industrySchema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: siteUrl,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Industries",
+        item: `${siteUrl}/industries`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: industry.name,
+        item: `${siteUrl}/industries/${industry.slug}`,
+      },
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: `${industry.name} Solutions — CRN Advisory Systems`,
+    description: industry.framing,
+    url: `${siteUrl}/industries/${industry.slug}`,
+    about: {
+      "@type": "Thing",
+      name: industry.name,
+    },
+    inLanguage: "en-ID",
+  },
+];
+
+const metaDescription = `${industry.name} sector solutions for CRN Advisory Systems. ${industry.framing}`;
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, viewport-fit=cover"
-    />
-    <meta
-      name="description"
-      content={`${industry.name} sector playbook for CRN Advisory Systems. ${industry.framing}`}
-    />
-    <title>{industry.name} | Industries | CRN Advisory Systems</title>
-  </head>
-  <body>
-    <Header />
-    <main class="pt-[var(--crn-header-height)]">
-      <section
-        class="dark:border-brand-800/70 dark:bg-surface-inverse border-b border-neutral-200 bg-neutral-50"
-      >
-        <div class="section-shell py-section-lg">
-          <div class="max-w-[var(--container-prose)]">
-            <p
-              class="text-accent-700 dark:text-accent-500 text-caption font-semibold tracking-[0.12em] uppercase"
+<Base
+  title={`${industry.name} | Industries | CRN Advisory Systems`}
+  description={metaDescription}
+  seo={{
+    openGraph: {
+      basic: {
+        title: `${industry.name} Solutions — CRN Advisory Systems`,
+        description: industry.framing,
+      },
+    },
+  }}
+  schema={industrySchema}
+>
+  <main class="pt-[var(--crn-header-height)]">
+    <section
+      class="dark:border-brand-800/70 dark:bg-surface-inverse border-b border-neutral-200 bg-neutral-50"
+    >
+      <div class="section-shell py-section-lg">
+        <div class="max-w-[var(--container-prose)]">
+          <p
+            class="text-accent-700 dark:text-accent-500 text-caption font-semibold tracking-[0.12em] uppercase"
+          >
+            {cluster.label}
+          </p>
+          <h1
+            class="font-display text-h1 text-brand-900 mt-4 leading-[1] font-semibold tracking-[-0.035em] dark:text-neutral-100"
+          >
+            {industry.name}
+          </h1>
+          <p
+            class="text-body-lg text-readable mt-5 leading-[1.7] text-neutral-600 dark:text-neutral-300"
+          >
+            {industry.framing}
+          </p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a
+              class="bg-brand-700 text-surface shadow-button hover:bg-brand-900 focus-visible:outline-brand-500 inline-flex items-center rounded-full px-6 py-3 font-semibold transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2"
+              href="/industries"
             >
-              {cluster.label}
-            </p>
-            <h1
-              class="font-display text-h1 text-brand-900 mt-4 leading-[1] font-semibold tracking-[-0.035em] dark:text-neutral-100"
+              Back to industries
+            </a>
+            <a
+              class="bg-surface text-brand-900 hover:border-brand-200 focus-visible:outline-brand-500 dark:border-brand-800/70 dark:bg-brand-950 dark:hover:border-brand-700 inline-flex items-center rounded-full border border-neutral-200 px-6 py-3 font-semibold transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 dark:text-neutral-100"
+              href="/#services"
             >
-              {industry.name}
-            </h1>
-            <p
-              class="text-body-lg text-readable mt-5 leading-[1.7] text-neutral-600 dark:text-neutral-300"
-            >
-              {industry.framing}
-            </p>
-            <div class="mt-8 flex flex-wrap gap-3">
-              <a
-                class="bg-brand-700 text-surface shadow-button hover:bg-brand-900 focus-visible:outline-brand-500 inline-flex items-center rounded-full px-6 py-3 font-semibold transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2"
-                href="/industries"
-              >
-                Back to industries
-              </a>
-              <a
-                class="bg-surface text-brand-900 hover:border-brand-200 focus-visible:outline-brand-500 dark:border-brand-800/70 dark:bg-brand-950 dark:hover:border-brand-700 inline-flex items-center rounded-full border border-neutral-200 px-6 py-3 font-semibold transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 dark:text-neutral-100"
-                href="/#services"
-              >
-                View services
-              </a>
-            </div>
+              View services
+            </a>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="section-shell py-section-lg">
-        <div
-          class="grid gap-6 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)]"
-        >
-          <article
-            class="rounded-panel bg-surface shadow-card dark:border-brand-800/70 dark:bg-brand-950 border border-neutral-200 p-6"
-          >
-            <p
-              class="text-caption text-accent-700 dark:text-accent-500 font-semibold tracking-[0.12em] uppercase"
-            >
-              Sector context
-            </p>
-            <h2
-              class="font-display text-h3 text-brand-900 mt-3 leading-[1.08] font-semibold tracking-[-0.025em] dark:text-neutral-100"
-            >
-              Why this sector needs governance before scale.
-            </h2>
-            <p
-              class="text-body-sm mt-4 max-w-[58ch] leading-[1.7] text-neutral-600 dark:text-neutral-300"
-            >
-              {cluster.summary}
-            </p>
-          </article>
-
-          <article
-            class="rounded-panel bg-surface shadow-card dark:border-brand-800/70 dark:bg-brand-950 border border-neutral-200 p-6"
-          >
-            <p
-              class="text-caption text-accent-700 dark:text-accent-500 font-semibold tracking-[0.12em] uppercase"
-            >
-              CRN focus
-            </p>
-            <h2
-              class="font-display text-h3 text-brand-900 mt-3 leading-[1.08] font-semibold tracking-[-0.025em] dark:text-neutral-100"
-            >
-              What this page is meant to help a buying committee decide.
-            </h2>
-            <ul class="mt-4 space-y-3">
-              <li
-                class="text-body-sm flex items-start gap-3 leading-[1.7] text-neutral-600 dark:text-neutral-300"
-              >
-                <span
-                  class="bg-accent-500 mt-2 size-1.5 shrink-0 rounded-full"
-                  aria-hidden="true"></span>
-                <span
-                  >Whether the current program needs control design before
-                  scale.</span
-                >
-              </li>
-              <li
-                class="text-body-sm flex items-start gap-3 leading-[1.7] text-neutral-600 dark:text-neutral-300"
-              >
-                <span
-                  class="bg-accent-500 mt-2 size-1.5 shrink-0 rounded-full"
-                  aria-hidden="true"></span>
-                <span
-                  >Where governance, data, cloud, and resilience work overlap.</span
-                >
-              </li>
-              <li
-                class="text-body-sm flex items-start gap-3 leading-[1.7] text-neutral-600 dark:text-neutral-300"
-              >
-                <span
-                  class="bg-accent-500 mt-2 size-1.5 shrink-0 rounded-full"
-                  aria-hidden="true"></span>
-                <span
-                  >What proof a procurement or risk team will ask for next.</span
-                >
-              </li>
-            </ul>
-          </article>
-        </div>
-
-        <div
-          class="rounded-panel bg-surface shadow-card dark:border-brand-800/70 dark:bg-brand-950 mt-6 border border-neutral-200 p-6"
+    <section class="section-shell py-section-lg">
+      <div class="grid gap-6 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)]">
+        <article
+          class="rounded-panel bg-surface shadow-card dark:border-brand-800/70 dark:bg-brand-950 border border-neutral-200 p-6"
         >
           <p
             class="text-caption text-accent-700 dark:text-accent-500 font-semibold tracking-[0.12em] uppercase"
           >
-            Typical programs
+            Sector context
           </p>
-          <div class="mt-4 grid gap-4 md:grid-cols-3">
-            <div
-              class="rounded-card dark:border-brand-800/70 dark:bg-brand-950 border border-neutral-200 bg-neutral-50 p-4"
+          <h2
+            class="font-display text-h3 text-brand-900 mt-3 leading-[1.08] font-semibold tracking-[-0.025em] dark:text-neutral-100"
+          >
+            Why this sector needs governance before scale.
+          </h2>
+          <p
+            class="text-body-sm mt-4 max-w-[58ch] leading-[1.7] text-neutral-600 dark:text-neutral-300"
+          >
+            {cluster.summary}
+          </p>
+        </article>
+
+        <article
+          class="rounded-panel bg-surface shadow-card dark:border-brand-800/70 dark:bg-brand-950 border border-neutral-200 p-6"
+        >
+          <p
+            class="text-caption text-accent-700 dark:text-accent-500 font-semibold tracking-[0.12em] uppercase"
+          >
+            CRN focus
+          </p>
+          <h2
+            class="font-display text-h3 text-brand-900 mt-3 leading-[1.08] font-semibold tracking-[-0.025em] dark:text-neutral-100"
+          >
+            What this page is meant to help a buying committee decide.
+          </h2>
+          <ul class="mt-4 space-y-3">
+            <li
+              class="text-body-sm flex items-start gap-3 leading-[1.7] text-neutral-600 dark:text-neutral-300"
             >
-              <p
-                class="text-body text-brand-900 font-semibold dark:text-neutral-100"
+              <span
+                class="bg-accent-500 mt-2 size-1.5 shrink-0 rounded-full"
+                aria-hidden="true"></span>
+              <span
+                >Whether the current program needs control design before scale.</span
               >
-                Governance and controls
-              </p>
-              <p
-                class="text-body-sm mt-2 leading-[1.65] text-neutral-600 dark:text-neutral-300"
-              >
-                Policy, approvals, risk checkpoints, and evidence that can stand
-                up to scrutiny.
-              </p>
-            </div>
-            <div
-              class="rounded-card dark:border-brand-800/70 dark:bg-brand-950 border border-neutral-200 bg-neutral-50 p-4"
+            </li>
+            <li
+              class="text-body-sm flex items-start gap-3 leading-[1.7] text-neutral-600 dark:text-neutral-300"
             >
-              <p
-                class="text-body text-brand-900 font-semibold dark:text-neutral-100"
+              <span
+                class="bg-accent-500 mt-2 size-1.5 shrink-0 rounded-full"
+                aria-hidden="true"></span>
+              <span
+                >Where governance, data, cloud, and resilience work overlap.</span
               >
-                Data and operations
-              </p>
-              <p
-                class="text-body-sm mt-2 leading-[1.65] text-neutral-600 dark:text-neutral-300"
-              >
-                Integration, quality, lineage, and operating discipline across
-                teams or sites.
-              </p>
-            </div>
-            <div
-              class="rounded-card dark:border-brand-800/70 dark:bg-brand-950 border border-neutral-200 bg-neutral-50 p-4"
+            </li>
+            <li
+              class="text-body-sm flex items-start gap-3 leading-[1.7] text-neutral-600 dark:text-neutral-300"
             >
-              <p
-                class="text-body text-brand-900 font-semibold dark:text-neutral-100"
+              <span
+                class="bg-accent-500 mt-2 size-1.5 shrink-0 rounded-full"
+                aria-hidden="true"></span>
+              <span
+                >What proof a procurement or risk team will ask for next.</span
               >
-                Assurance and handoff
-              </p>
-              <p
-                class="text-body-sm mt-2 leading-[1.65] text-neutral-600 dark:text-neutral-300"
-              >
-                Decision packs, reporting, and a clear path from assessment to
-                implementation.
-              </p>
-            </div>
+            </li>
+          </ul>
+        </article>
+      </div>
+
+      <div
+        class="rounded-panel bg-surface shadow-card dark:border-brand-800/70 dark:bg-brand-950 mt-6 border border-neutral-200 p-6"
+      >
+        <p
+          class="text-caption text-accent-700 dark:text-accent-500 font-semibold tracking-[0.12em] uppercase"
+        >
+          Typical programs
+        </p>
+        <div class="mt-4 grid gap-4 md:grid-cols-3">
+          <div
+            class="rounded-card dark:border-brand-800/70 dark:bg-brand-950 border border-neutral-200 bg-neutral-50 p-4"
+          >
+            <p
+              class="text-body text-brand-900 font-semibold dark:text-neutral-100"
+            >
+              Governance and controls
+            </p>
+            <p
+              class="text-body-sm mt-2 leading-[1.65] text-neutral-600 dark:text-neutral-300"
+            >
+              Policy, approvals, risk checkpoints, and evidence that can stand
+              up to scrutiny.
+            </p>
+          </div>
+          <div
+            class="rounded-card dark:border-brand-800/70 dark:bg-brand-950 border border-neutral-200 bg-neutral-50 p-4"
+          >
+            <p
+              class="text-body text-brand-900 font-semibold dark:text-neutral-100"
+            >
+              Data and operations
+            </p>
+            <p
+              class="text-body-sm mt-2 leading-[1.65] text-neutral-600 dark:text-neutral-300"
+            >
+              Integration, quality, lineage, and operating discipline across
+              teams or sites.
+            </p>
+          </div>
+          <div
+            class="rounded-card dark:border-brand-800/70 dark:bg-brand-950 border border-neutral-200 bg-neutral-50 p-4"
+          >
+            <p
+              class="text-body text-brand-900 font-semibold dark:text-neutral-100"
+            >
+              Assurance and handoff
+            </p>
+            <p
+              class="text-body-sm mt-2 leading-[1.65] text-neutral-600 dark:text-neutral-300"
+            >
+              Decision packs, reporting, and a clear path from assessment to
+              implementation.
+            </p>
           </div>
         </div>
-      </section>
-    </main>
-    <Footer />
-  </body>
-</html>
+      </div>
+    </section>
+  </main>
+</Base>

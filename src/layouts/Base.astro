@@ -1,0 +1,144 @@
+---
+import "../styles/global.css";
+import { SEO } from "astro-seo";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import siteData from "../constants/siteData.json";
+
+interface Props {
+  title?: string;
+  description?: string;
+  seo?: Record<string, any>;
+  schema?: Record<string, any>[];
+  alternates?: { lang: string; url: string }[];
+}
+
+const {
+  title,
+  description,
+  seo: seoOverrides,
+  schema,
+  alternates,
+} = Astro.props as Props;
+
+const overrides = seoOverrides || {};
+
+const seo = {
+  ...siteData.default,
+  ...overrides,
+  title: title ?? overrides.title ?? siteData.default.title,
+  description:
+    description ?? overrides.description ?? siteData.default.description,
+  openGraph: {
+    basic: {
+      ...siteData.default.openGraph.basic,
+      url: Astro.url.href,
+      ...(overrides.openGraph as Record<string, any>)?.basic,
+    },
+    optional: {
+      ...siteData.default.openGraph.optional,
+    },
+  },
+  twitter: {
+    ...siteData.default.twitter,
+    card: (overrides.twitter?.card ?? siteData.default.twitter.card) as
+      | "summary"
+      | "summary_large_image"
+      | "app"
+      | "player"
+      | undefined,
+  },
+};
+
+const canonicalUrl = Astro.url.href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <SEO {...seo} />
+    <link rel="canonical" href={canonicalUrl} />
+    {
+      alternates?.map((alt) => (
+        <link rel="alternate" hreflang={alt.lang} href={alt.url} />
+      ))
+    }
+    <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;650&family=IBM+Plex+Mono:wght@400;500;600&family=Satoshi:wght@650&display=swap"
+      rel="stylesheet"
+    />
+    {
+      schema?.map((s) => (
+        <script
+          type="application/ld+json"
+          set:html={JSON.stringify(s)}
+          is:inline
+        />
+      ))
+    }
+    <slot name="head" />
+  </head>
+  <body>
+    <Header />
+    <slot />
+    <Footer />
+  </body>
+</html>
+
+<style is:global>
+  ::selection {
+    background-color: var(--color-brand-700);
+    color: var(--color-surface);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-neutral-100);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-neutral-400);
+    border-radius: 5px;
+    border: 2px solid var(--color-neutral-100);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-neutral-500);
+  }
+
+  [data-theme="dark"] ::-webkit-scrollbar-track {
+    background: var(--color-brand-950);
+  }
+
+  [data-theme="dark"] ::-webkit-scrollbar-thumb {
+    background: var(--color-brand-700);
+    border-color: var(--color-brand-950);
+  }
+
+  [data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-brand-600);
+  }
+</style>
