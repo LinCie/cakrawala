@@ -8,13 +8,7 @@ import SolutionOverview from "../components/SolutionOverview.astro";
 import ServiceGrid from "../components/ServiceGrid.astro";
 import IndustryFocus from "../components/IndustryFocus.astro";
 import Differentiators from "../components/Differentiators.astro";
-
-const sections = [
-  "Case-Study Preview",
-  "Trust Center",
-  "Insights Preview",
-  "Final CTA",
-];
+import CaseStudyPreview from "../components/CaseStudyPreview.astro";
 ---
 
 <!doctype html>
@@ -52,8 +46,9 @@ const sections = [
       <ServiceGrid />
       <IndustryFocus />
       <Differentiators />
+      <CaseStudyPreview />
       {
-        sections.map((section) => (
+        ["Trust Center", "Insights Preview", "Final CTA"].map((section) => (
           <section class="flex h-screen items-center justify-center px-6 text-center">
             <p>{section}</p>
           </section>
