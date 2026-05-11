@@ -1,20 +1,53 @@
 ---
 import Base from "../../layouts/Base.astro";
-import { industries, sectorClusterBySlug } from "../../data/industries";
+import { crnIndustries, type Industry } from "../../data/crn-industries";
+import { marked } from "marked";
+
+const sanitizeHtml = (html: string) =>
+  html
+    .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, "")
+    .replace(/<style[\s\S]*?>[\s\S]*?<\/style>/gi, "")
+    .replace(/\son\w+=("[^"]*"|'[^']*'|[^\s>]+)/gi, "")
+    .replace(/\s(href|src)=("|')\s*javascript:[\s\S]*?\2/gi, "")
+    .replace(/\sstyle=("|')[\s\S]*?\1/gi, "");
+
+const markdownRenderer = new marked.Renderer();
+markdownRenderer.html = () => "";
 
 export function getStaticPaths() {
-  return industries.map((industry) => ({
+  return crnIndustries.map((industry) => ({
     params: { slug: industry.slug },
-    props: { industry },
+    props: { industry, allIndustries: crnIndustries },
   }));
 }
 
 const { industry } = Astro.props as {
-  industry: (typeof industries)[number];
+  industry: Industry;
+  allIndustries: Industry[];
 };
 
-const cluster = sectorClusterBySlug[industry.slug];
 const siteUrl = Astro.site?.toString() || "https://crnadvisory.id";
+const canonicalUrl = `${siteUrl}/industries/${industry.slug}`;
+const seoTitle =
+  industry.seo?.title || `${industry.name} | Industries | CRN Advisory Systems`;
+const seoDescription =
+  industry.seo?.description || `${industry.subtitle} ${industry.excerpt}`;
+const seoKeywords = industry.seo?.keywords || [];
+const narrativeHtml = sanitizeHtml(
+  await marked.parse(industry.content || "", { renderer: markdownRenderer }),
+);
+
+const relatedIndustries = crnIndustries
+  .filter((item) => item.slug !== industry.slug)
+  .sort((a, b) => a.order - b.order)
+  .slice(0, 3);
+
+const primaryCtaLabel = industry.cta?.label || "Discuss this sector";
+const primaryCtaHref = industry.cta?.href || "/#contact";
+const secondaryCtaLabel = industry.cta?.secondaryLabel || "View services";
+const secondaryCtaHref = industry.cta?.secondaryHref || "/#services";
+
+const industryIndex = String(industry.order).padStart(2, "0");
 
 const industrySchema = [
   {
@@ -37,35 +70,36 @@ const industrySchema = [
         "@type": "ListItem",
         position: 3,
         name: industry.name,
-        item: `${siteUrl}/industries/${industry.slug}`,
+        item: canonicalUrl,
       },
     ],
   },
   {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    name: `${industry.name} Solutions — CRN Advisory Systems`,
-    description: industry.framing,
-    url: `${siteUrl}/industries/${industry.slug}`,
+    name: seoTitle,
+    description: seoDescription,
+    url: canonicalUrl,
     about: {
       "@type": "Thing",
       name: industry.name,
     },
+    keywords: seoKeywords,
     inLanguage: "en-ID",
   },
 ];
-
-const metaDescription = `${industry.name} sector solutions for CRN Advisory Systems. ${industry.framing}`;
 ---
 
 <Base
-  title={`${industry.name} | Industries | CRN Advisory Systems`}
-  description={metaDescription}
+  title={seoTitle}
+  description={seoDescription}
   seo={{
+    canonical: canonicalUrl,
     openGraph: {
       basic: {
-        title: `${industry.name} Solutions — CRN Advisory Systems`,
-        description: industry.framing,
+        title: seoTitle,
+        description: seoDescription,
+        image: industry.image,
       },
     },
   }}
@@ -77,10 +111,36 @@ const metaDescription = `${industry.name} sector solutions for CRN Advisory Syst
     >
       <div class="section-shell py-section-lg">
         <div class="max-w-[var(--container-prose)]">
+          <nav aria-label="Breadcrumb" class="mb-8">
+            <ol
+              class="flex flex-wrap items-center text-sm text-neutral-500 dark:text-neutral-400 [&>li+li]:before:mx-2 [&>li+li]:before:text-neutral-400 [&>li+li]:before:content-['/'] dark:[&>li+li]:before:text-neutral-500"
+            >
+              <li>
+                <a
+                  class="hover:text-brand-700 dark:hover:text-accent-500 inline-flex min-h-11 items-center"
+                  href="/"
+                >
+                  Home
+                </a>
+              </li>
+              <li>
+                <a
+                  class="hover:text-brand-700 dark:hover:text-accent-500 inline-flex min-h-11 items-center"
+                  href="/industries"
+                >
+                  Industries
+                </a>
+              </li>
+              <li class="text-neutral-700 dark:text-neutral-200">
+                {industry.name}
+              </li>
+            </ol>
+          </nav>
+
           <p
             class="text-accent-700 dark:text-accent-500 text-caption font-semibold tracking-[0.12em] uppercase"
           >
-            {cluster.label}
+            {industry.category} · Sector {industryIndex}
           </p>
           <h1
             class="font-display text-h1 text-brand-900 mt-4 leading-[1] font-semibold tracking-[-0.035em] dark:text-neutral-100"
@@ -90,20 +150,25 @@ const metaDescription = `${industry.name} sector solutions for CRN Advisory Syst
           <p
             class="text-body-lg text-readable mt-5 leading-[1.7] text-neutral-600 dark:text-neutral-300"
           >
-            {industry.framing}
+            {industry.subtitle}
+          </p>
+          <p
+            class="text-body mt-4 max-w-[70ch] leading-[1.75] text-neutral-600 dark:text-neutral-300"
+          >
+            {industry.excerpt}
           </p>
           <div class="mt-8 flex flex-wrap gap-3">
             <a
               class="bg-brand-700 text-surface shadow-button hover:bg-brand-900 focus-visible:outline-brand-500 inline-flex items-center rounded-full px-6 py-3 font-semibold transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2"
-              href="/industries"
+              href={primaryCtaHref}
             >
-              Back to industries
+              {primaryCtaLabel}
             </a>
             <a
               class="bg-surface text-brand-900 hover:border-brand-200 focus-visible:outline-brand-500 dark:border-brand-800/70 dark:bg-brand-950 dark:hover:border-brand-700 inline-flex items-center rounded-full border border-neutral-200 px-6 py-3 font-semibold transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 dark:text-neutral-100"
-              href="/#services"
+              href={secondaryCtaHref}
             >
-              View services
+              {secondaryCtaLabel}
             </a>
           </div>
         </div>
@@ -111,131 +176,367 @@ const metaDescription = `${industry.name} sector solutions for CRN Advisory Syst
     </section>
 
     <section class="section-shell py-section-lg">
-      <div class="grid gap-6 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)]">
-        <article
-          class="rounded-panel bg-surface shadow-card dark:border-brand-800/70 dark:bg-brand-950 border border-neutral-200 p-6"
+      <figure
+        class="rounded-panel bg-surface shadow-card dark:border-brand-800/70 dark:bg-brand-950 overflow-hidden border border-neutral-200"
+      >
+        <img
+          src={industry.image}
+          alt={industry.imageAlt}
+          class="h-auto w-full object-cover"
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption
+          class="text-caption dark:border-brand-800/70 border-t border-neutral-200 px-5 py-3 text-neutral-500 dark:text-neutral-400"
+        >
+          Sector image, ordered {industry.order}, category {industry.category}.
+        </figcaption>
+      </figure>
+
+      <div
+        class="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)]"
+      >
+        <section
+          class="dark:border-brand-800/70 border-t border-neutral-200 pt-5"
         >
           <p
             class="text-caption text-accent-700 dark:text-accent-500 font-semibold tracking-[0.12em] uppercase"
           >
-            Sector context
+            Market fit
           </p>
           <h2
             class="font-display text-h3 text-brand-900 mt-3 leading-[1.08] font-semibold tracking-[-0.025em] dark:text-neutral-100"
           >
-            Why this sector needs governance before scale.
+            Why this sector is a fit for governed modernization.
           </h2>
-          <p
-            class="text-body-sm mt-4 max-w-[58ch] leading-[1.7] text-neutral-600 dark:text-neutral-300"
-          >
-            {cluster.summary}
-          </p>
-        </article>
+          <ul class="mt-4 space-y-3">
+            {
+              industry.marketFit.map((item) => (
+                <li class="text-body-sm flex items-start gap-3 leading-[1.7] text-neutral-600 dark:text-neutral-300">
+                  <span
+                    class="bg-accent-500 mt-2 size-1.5 shrink-0 rounded-full"
+                    aria-hidden="true"
+                  />
+                  <span>{item}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </section>
 
-        <article
-          class="rounded-panel bg-surface shadow-card dark:border-brand-800/70 dark:bg-brand-950 border border-neutral-200 p-6"
+        <aside
+          class="dark:border-brand-800/70 border-t border-neutral-200 pt-5"
+        >
+          <p
+            class="text-caption text-accent-700 dark:text-accent-500 font-semibold tracking-[0.12em] uppercase"
+          >
+            Primary buyers
+          </p>
+          <h2
+            class="font-display text-h3 text-brand-900 mt-3 leading-[1.08] font-semibold tracking-[-0.025em] dark:text-neutral-100"
+          >
+            Who usually has to sign off.
+          </h2>
+          <div class="mt-4 flex flex-wrap gap-2">
+            {
+              industry.primaryBuyers.map((buyer) => (
+                <span class="text-body-sm dark:border-brand-800/70 dark:bg-brand-950 rounded-full border border-neutral-200 bg-neutral-50 px-3 py-2 text-neutral-700 dark:text-neutral-200">
+                  {buyer}
+                </span>
+              ))
+            }
+          </div>
+        </aside>
+      </div>
+
+      <div class="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+        <section
+          class="dark:border-brand-800/70 border-t border-neutral-200 pt-5"
+        >
+          <p
+            class="text-caption text-accent-700 dark:text-accent-500 font-semibold tracking-[0.12em] uppercase"
+          >
+            Challenges
+          </p>
+          <div class="mt-4 space-y-5">
+            {
+              industry.challenges.map((item, index) => (
+                <div
+                  class:list={[
+                    "grid gap-2",
+                    index > 0 &&
+                      "dark:border-brand-800/70 border-t border-neutral-200 pt-4",
+                  ]}
+                >
+                  <p class="text-body text-brand-900 font-semibold dark:text-neutral-100">
+                    {item.title}
+                  </p>
+                  <p class="text-body-sm leading-[1.65] text-neutral-600 dark:text-neutral-300">
+                    {item.description}
+                  </p>
+                </div>
+              ))
+            }
+          </div>
+        </section>
+        <section
+          class="dark:border-brand-800/70 border-t border-neutral-200 pt-5"
         >
           <p
             class="text-caption text-accent-700 dark:text-accent-500 font-semibold tracking-[0.12em] uppercase"
           >
             CRN focus
           </p>
-          <h2
-            class="font-display text-h3 text-brand-900 mt-3 leading-[1.08] font-semibold tracking-[-0.025em] dark:text-neutral-100"
-          >
-            What this page is meant to help a buying committee decide.
-          </h2>
-          <ul class="mt-4 space-y-3">
-            <li
-              class="text-body-sm flex items-start gap-3 leading-[1.7] text-neutral-600 dark:text-neutral-300"
-            >
-              <span
-                class="bg-accent-500 mt-2 size-1.5 shrink-0 rounded-full"
-                aria-hidden="true"></span>
-              <span
-                >Whether the current program needs control design before scale.</span
-              >
-            </li>
-            <li
-              class="text-body-sm flex items-start gap-3 leading-[1.7] text-neutral-600 dark:text-neutral-300"
-            >
-              <span
-                class="bg-accent-500 mt-2 size-1.5 shrink-0 rounded-full"
-                aria-hidden="true"></span>
-              <span
-                >Where governance, data, cloud, and resilience work overlap.</span
-              >
-            </li>
-            <li
-              class="text-body-sm flex items-start gap-3 leading-[1.7] text-neutral-600 dark:text-neutral-300"
-            >
-              <span
-                class="bg-accent-500 mt-2 size-1.5 shrink-0 rounded-full"
-                aria-hidden="true"></span>
-              <span
-                >What proof a procurement or risk team will ask for next.</span
-              >
-            </li>
-          </ul>
-        </article>
+          <div class="mt-4 space-y-5">
+            {
+              industry.crnFocus.map((item, index) => (
+                <div
+                  class:list={[
+                    "grid gap-2",
+                    index > 0 &&
+                      "dark:border-brand-800/70 border-t border-neutral-200 pt-4",
+                  ]}
+                >
+                  <p class="text-body text-brand-900 font-semibold dark:text-neutral-100">
+                    {item.title}
+                  </p>
+                  <p class="text-body-sm leading-[1.65] text-neutral-600 dark:text-neutral-300">
+                    {item.description}
+                  </p>
+                </div>
+              ))
+            }
+          </div>
+        </section>
       </div>
 
-      <div
-        class="rounded-panel bg-surface shadow-card dark:border-brand-800/70 dark:bg-brand-950 mt-6 border border-neutral-200 p-6"
+      <section
+        class="dark:border-brand-800/70 mt-6 border-t border-neutral-200 pt-5"
       >
         <p
           class="text-caption text-accent-700 dark:text-accent-500 font-semibold tracking-[0.12em] uppercase"
         >
-          Typical programs
+          Solutions and outcomes
         </p>
-        <div class="mt-4 grid gap-4 md:grid-cols-3">
-          <div
-            class="rounded-card dark:border-brand-800/70 dark:bg-brand-950 border border-neutral-200 bg-neutral-50 p-4"
-          >
+        <div
+          class="mt-4 grid gap-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]"
+        >
+          <div>
             <p
               class="text-body text-brand-900 font-semibold dark:text-neutral-100"
             >
-              Governance and controls
+              Solutions
             </p>
-            <p
-              class="text-body-sm mt-2 leading-[1.65] text-neutral-600 dark:text-neutral-300"
+            <ul
+              class="text-body-sm mt-3 space-y-2 text-neutral-700 dark:text-neutral-200"
             >
-              Policy, approvals, risk checkpoints, and evidence that can stand
-              up to scrutiny.
-            </p>
+              {
+                industry.solutions.length > 0 ? (
+                  industry.solutions.map((item) => <li>{item}</li>)
+                ) : (
+                  <li>Solution details available on request.</li>
+                )
+              }
+            </ul>
           </div>
-          <div
-            class="rounded-card dark:border-brand-800/70 dark:bg-brand-950 border border-neutral-200 bg-neutral-50 p-4"
-          >
+          <div>
             <p
               class="text-body text-brand-900 font-semibold dark:text-neutral-100"
             >
-              Data and operations
+              Outcomes
             </p>
-            <p
-              class="text-body-sm mt-2 leading-[1.65] text-neutral-600 dark:text-neutral-300"
-            >
-              Integration, quality, lineage, and operating discipline across
-              teams or sites.
-            </p>
-          </div>
-          <div
-            class="rounded-card dark:border-brand-800/70 dark:bg-brand-950 border border-neutral-200 bg-neutral-50 p-4"
-          >
-            <p
-              class="text-body text-brand-900 font-semibold dark:text-neutral-100"
-            >
-              Assurance and handoff
-            </p>
-            <p
-              class="text-body-sm mt-2 leading-[1.65] text-neutral-600 dark:text-neutral-300"
-            >
-              Decision packs, reporting, and a clear path from assessment to
-              implementation.
-            </p>
+            <ul class="mt-3 grid gap-3 md:grid-cols-2">
+              {
+                industry.outcomes.length > 0 ? (
+                  industry.outcomes.map((item) => (
+                    <li class="text-body-sm flex items-start gap-3 leading-[1.7] text-neutral-600 dark:text-neutral-300">
+                      <span
+                        class="mt-2 size-1.5 shrink-0 rounded-full bg-teal-500"
+                        aria-hidden="true"
+                      />
+                      <span>{item}</span>
+                    </li>
+                  ))
+                ) : (
+                  <li class="text-body-sm text-neutral-600 dark:text-neutral-300">
+                    Outcome details available on request.
+                  </li>
+                )
+              }
+            </ul>
           </div>
         </div>
+      </section>
+
+      <div
+        class="mt-6 grid gap-6 lg:grid-cols-[minmax(0,0.98fr)_minmax(0,1.02fr)]"
+      >
+        <article
+          class="dark:border-brand-800/70 border-t border-neutral-200 pt-5"
+        >
+          <p
+            class="text-caption text-accent-700 dark:text-accent-500 font-semibold tracking-[0.12em] uppercase"
+          >
+            Narrative
+          </p>
+          <h2
+            class="font-display text-h3 text-brand-900 mt-3 leading-[1.08] font-semibold tracking-[-0.025em] dark:text-neutral-100"
+          >
+            What the sector story needs to make clear.
+          </h2>
+          <article
+            class="prose prose-enterprise text-readable prose-headings:font-display prose-headings:leading-[1.12] prose-headings:font-semibold prose-headings:tracking-[-0.02em] prose-h2:mt-10 prose-h2:mb-4 prose-h3:mt-8 prose-h3:mb-3 prose-p:my-4 prose-p:leading-[1.78] prose-li:my-1.5 prose-li:leading-[1.7] prose-ul:my-5 prose-ol:my-5 prose-blockquote:rounded-card prose-blockquote:border prose-blockquote:border-accent-300/80 prose-blockquote:bg-accent-100/30 prose-blockquote:px-5 prose-blockquote:py-3 prose-blockquote:font-normal prose-blockquote:italic prose-pre:rounded-card prose-pre:px-5 prose-pre:py-4 prose-code:font-mono prose-code:text-[0.92em] prose-a:font-medium prose-a:no-underline prose-a:decoration-accent-500 prose-a:decoration-2 prose-a:underline-offset-2 prose-a:focus-visible:outline-brand-500 prose-a:focus-visible:outline-2 prose-a:focus-visible:outline-offset-2 hover:prose-a:underline dark:prose-invert mt-5 max-w-[72ch]"
+            set:html={narrativeHtml}
+          />
+        </article>
+
+        <article
+          class="dark:border-brand-800/70 border-t border-neutral-200 pt-5"
+        >
+          <p
+            class="text-caption text-accent-700 dark:text-accent-500 font-semibold tracking-[0.12em] uppercase"
+          >
+            Deliverables
+          </p>
+          <h2
+            class="font-display text-h3 text-brand-900 mt-3 leading-[1.08] font-semibold tracking-[-0.025em] dark:text-neutral-100"
+          >
+            What this engagement usually needs next.
+          </h2>
+          <div class="mt-4 space-y-4">
+            <article>
+              <p
+                class="text-body text-brand-900 font-semibold dark:text-neutral-100"
+              >
+                Primary outputs
+              </p>
+              <ul
+                class="text-body-sm mt-2 space-y-2 text-neutral-600 dark:text-neutral-300"
+              >
+                {industry.solutions.map((item) => <li>{item}</li>)}
+              </ul>
+            </article>
+            <article>
+              <p
+                class="text-body text-brand-900 font-semibold dark:text-neutral-100"
+              >
+                Buyer concerns
+              </p>
+              <ul
+                class="text-body-sm mt-2 space-y-2 text-neutral-600 dark:text-neutral-300"
+              >
+                {industry.primaryBuyers.map((buyer) => <li>{buyer}</li>)}
+              </ul>
+            </article>
+          </div>
+        </article>
       </div>
+
+      <section
+        class="mt-10 grid gap-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]"
+      >
+        <article
+          class="dark:border-brand-800/70 border-t border-neutral-200 pt-4"
+        >
+          <h2
+            class="text-caption font-semibold tracking-[0.1em] text-neutral-500 uppercase dark:text-neutral-400"
+          >
+            Keywords
+          </h2>
+          <ul
+            class="text-body-sm mt-3 flex flex-wrap gap-2 text-neutral-700 dark:text-neutral-200"
+          >
+            {
+              seoKeywords.length > 0 ? (
+                seoKeywords.map((keyword) => (
+                  <li class="dark:border-brand-800/70 dark:bg-brand-950 rounded-full border border-neutral-200 bg-neutral-50 px-3 py-2">
+                    {keyword}
+                  </li>
+                ))
+              ) : (
+                <li class="dark:border-brand-800/70 dark:bg-brand-950 rounded-full border border-neutral-200 bg-neutral-50 px-3 py-2">
+                  No keyword metadata provided.
+                </li>
+              )
+            }
+          </ul>
+        </article>
+        <article
+          class="dark:border-brand-800/70 border-t border-neutral-200 pt-4"
+        >
+          <h2
+            class="text-caption font-semibold tracking-[0.1em] text-neutral-500 uppercase dark:text-neutral-400"
+          >
+            Navigation context
+          </h2>
+          <dl class="mt-3 grid gap-4 sm:grid-cols-3">
+            <div>
+              <dt
+                class="text-caption font-semibold tracking-[0.08em] text-neutral-500 uppercase dark:text-neutral-400"
+              >
+                Slug
+              </dt>
+              <dd
+                class="text-body-sm text-brand-900 mt-1 dark:text-neutral-100"
+              >
+                {industry.slug}
+              </dd>
+            </div>
+            <div>
+              <dt
+                class="text-caption font-semibold tracking-[0.08em] text-neutral-500 uppercase dark:text-neutral-400"
+              >
+                Order
+              </dt>
+              <dd
+                class="text-body-sm text-brand-900 mt-1 dark:text-neutral-100"
+              >
+                {industry.order}
+              </dd>
+            </div>
+            <div>
+              <dt
+                class="text-caption font-semibold tracking-[0.08em] text-neutral-500 uppercase dark:text-neutral-400"
+              >
+                Category
+              </dt>
+              <dd
+                class="text-body-sm text-brand-900 mt-1 dark:text-neutral-100"
+              >
+                {industry.category}
+              </dd>
+            </div>
+          </dl>
+        </article>
+      </section>
+
+      {
+        relatedIndustries.length > 0 && (
+          <section class="dark:border-brand-800/70 mt-12 border-t border-neutral-200 pt-6">
+            <h2 class="font-display text-h3 text-brand-900 leading-[1.08] font-semibold tracking-[-0.02em] dark:text-neutral-100">
+              Related industries
+            </h2>
+            <div class="mt-5 grid gap-4 md:grid-cols-3">
+              {relatedIndustries.map((item) => (
+                <a
+                  href={`/industries/${item.slug}`}
+                  class="rounded-card bg-surface hover:border-brand-200 focus-visible:outline-brand-500 dark:border-brand-800/70 dark:bg-brand-950 dark:hover:border-brand-700 dark:focus-visible:outline-accent-500 border border-neutral-200 p-4 transition-colors duration-[var(--duration-fast)] focus-visible:outline-2 focus-visible:outline-offset-2"
+                >
+                  <p class="text-caption font-semibold tracking-[0.08em] text-neutral-500 uppercase dark:text-neutral-400">
+                    {item.category}
+                  </p>
+                  <p class="text-body text-brand-900 mt-2 font-semibold dark:text-neutral-100">
+                    {item.name}
+                  </p>
+                  <p class="text-body-sm mt-2 leading-[1.6] text-neutral-600 dark:text-neutral-300">
+                    {item.excerpt}
+                  </p>
+                </a>
+              ))}
+            </div>
+          </section>
+        )
+      }
     </section>
   </main>
 </Base>

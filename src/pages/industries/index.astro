@@ -229,16 +229,20 @@ const decisionPaths = [
 
     {/* ===== Sticky Jump Nav ===== */}
     <nav
-      class="dark:border-brand-800/70 dark:bg-brand-950/90 lg:sticky lg:top-[var(--crn-header-height)] z-40 border-b border-neutral-200 bg-white/90 backdrop-blur-[8px] motion-reduce:backdrop-blur-none"
+      class="dark:border-brand-800/70 dark:bg-brand-950/90 z-40 border-b border-neutral-200 bg-white/90 backdrop-blur-[8px] motion-reduce:backdrop-blur-none lg:sticky lg:top-[var(--crn-header-height)]"
       aria-label="Industry cluster navigation"
     >
-      <div class="section-shell flex flex-col items-start gap-2 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+      <div
+        class="section-shell flex flex-col items-start gap-2 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4"
+      >
         <span
           class="text-caption font-semibold tracking-[0.08em] text-neutral-500 uppercase dark:text-neutral-400"
         >
           Jump to cluster
         </span>
-        <div class="scrollbar-hide -mx-1 flex w-full gap-2 overflow-x-auto px-1 pb-1 sm:mx-0 sm:w-auto sm:px-0 sm:pb-0">
+        <div
+          class="scrollbar-hide -mx-1 flex w-full gap-2 overflow-x-auto px-1 pb-1 sm:mx-0 sm:w-auto sm:px-0 sm:pb-0"
+        >
           {
             sectorClusters.map((cluster) => (
               <a
