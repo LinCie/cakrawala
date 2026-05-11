@@ -1,0 +1,528 @@
+---
+import Base from "../../layouts/Base.astro";
+import { marked } from "marked";
+
+const sanitizeHtml = (html: string) =>
+  html
+    .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, "")
+    .replace(/<style[\s\S]*?>[\s\S]*?<\/style>/gi, "")
+    .replace(/\son\w+=("[^"]*"|'[^']*'|[^\s>]+)/gi, "")
+    .replace(/\s(href|src)=("|')\s*javascript:[\s\S]*?\2/gi, "")
+    .replace(/\sstyle=("|')[\s\S]*?\1/gi, "");
+
+const markdownRenderer = new marked.Renderer();
+markdownRenderer.html = () => "";
+
+type CaseStudyImage = {
+  url: string;
+  alt: string;
+  source: string;
+  credit: string;
+  license: string;
+};
+
+type CaseStudyMetric = {
+  label: string;
+  value: string;
+  description?: string;
+};
+
+type CaseStudySeo = {
+  title?: string;
+  description?: string;
+  image?: string;
+};
+
+type CaseStudy = {
+  name: string;
+  slug: string;
+  image: CaseStudyImage;
+  excerpt: string;
+  industry: string;
+  region: string;
+  client_type: string;
+  services: string[];
+  solutions: string[];
+  buyer_personas: string[];
+  timeline: string;
+  challenge: string[];
+  approach: string[];
+  outcomes: string[];
+  metrics?: CaseStudyMetric[];
+  content: string;
+  seo?: CaseStudySeo;
+};
+
+export function getStaticPaths() {
+  const raw = import.meta.glob("../../data/*.jsonl", {
+    query: "?raw",
+    import: "default",
+    eager: true,
+  });
+  const preferredDataPath = Object.keys(raw).find((path) =>
+    path.endsWith("/crn_case_studies.jsonl"),
+  );
+  const fallbackPath = Object.keys(raw).sort()[0];
+  const content = raw[preferredDataPath || fallbackPath || ""];
+  const allStudies =
+    typeof content === "string"
+      ? content
+          .trim()
+          .split("\n")
+          .map((line) => JSON.parse(line) as CaseStudy)
+      : [];
+  return allStudies.map((study) => ({
+    params: { slug: study.slug },
+    props: { study, allStudies },
+  }));
+}
+
+const { study, allStudies: allFromProps } = Astro.props as {
+  study: CaseStudy;
+  allStudies: CaseStudy[];
+};
+
+const siteUrl = Astro.site?.toString() || "https://crnadvisory.id";
+const canonicalUrl = `${siteUrl}/case-studies/${study.slug}`;
+const seoTitle =
+  study.seo?.title || `${study.name} | Case Studies | CRN Advisory Systems`;
+const seoDescription = study.seo?.description || study.excerpt;
+const seoImage = study.seo?.image || study.image.url;
+const narrativeHtml = sanitizeHtml(
+  await marked.parse(study.content || "", { renderer: markdownRenderer }),
+);
+
+const currentIndex = allFromProps.findIndex((item) => item.slug === study.slug);
+const indexBySlug = new Map(
+  allFromProps.map((item, index) => [item.slug, index]),
+);
+const related = allFromProps
+  .filter((item) => item.slug !== study.slug)
+  .sort(
+    (a, b) =>
+      Math.abs((indexBySlug.get(a.slug) ?? 0) - currentIndex) -
+      Math.abs((indexBySlug.get(b.slug) ?? 0) - currentIndex),
+  )
+  .slice(0, 3);
+
+const caseStudySchema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: siteUrl,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Case Studies",
+        item: `${siteUrl}/case-studies`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: study.name,
+        item: canonicalUrl,
+      },
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: seoTitle,
+    description: seoDescription,
+    url: canonicalUrl,
+    inLanguage: "en-ID",
+    about: {
+      "@type": "Thing",
+      name: study.industry,
+    },
+  },
+];
+---
+
+<Base
+  title={seoTitle}
+  description={seoDescription}
+  seo={{
+    canonical: canonicalUrl,
+    openGraph: {
+      basic: {
+        title: seoTitle,
+        description: seoDescription,
+        image: seoImage,
+      },
+    },
+  }}
+  schema={caseStudySchema}
+>
+  <main class="pt-[var(--crn-header-height)]">
+    <section
+      class="dark:border-brand-800/70 dark:bg-surface-inverse border-b border-neutral-200 bg-neutral-50"
+    >
+      <div class="section-shell py-section-lg">
+        <nav aria-label="Breadcrumb" class="mb-8">
+          <ol
+            class="flex flex-wrap items-center gap-2 text-sm text-neutral-500 dark:text-neutral-400"
+          >
+            <li>
+              <a
+                class="focus-enterprise hover:text-brand-700 dark:hover:text-accent-500 inline-flex min-h-11 items-center"
+                href="/">Home</a
+              >
+            </li>
+            <li aria-hidden="true">/</li>
+            <li>
+              <a
+                class="focus-enterprise hover:text-brand-700 dark:hover:text-accent-500 inline-flex min-h-11 items-center"
+                href="/case-studies">Case Studies</a
+              >
+            </li>
+            <li aria-hidden="true">/</li>
+            <li class="text-neutral-700 dark:text-neutral-200">{study.name}</li>
+          </ol>
+        </nav>
+
+        <div
+          class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,30rem)] lg:items-start"
+        >
+          <div>
+            <p
+              class="text-caption text-accent-700 dark:text-accent-500 font-semibold tracking-[0.12em] uppercase"
+            >
+              Client Evidence
+            </p>
+            <h1
+              class="font-display text-h2 text-brand-900 mt-4 leading-[1.03] font-semibold tracking-[-0.03em] dark:text-neutral-100"
+            >
+              {study.name}
+            </h1>
+            <p
+              class="text-body-lg text-readable mt-5 leading-[1.7] text-neutral-600 dark:text-neutral-300"
+            >
+              {study.excerpt}
+            </p>
+          </div>
+
+          <dl
+            class="rounded-panel bg-surface shadow-card dark:border-brand-800/70 dark:bg-brand-950 border border-neutral-200 p-6"
+          >
+            <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+              <div>
+                <dt
+                  class="text-caption font-semibold tracking-[0.08em] text-neutral-500 uppercase dark:text-neutral-400"
+                >
+                  Industry
+                </dt><dd
+                  class="text-body-sm text-brand-900 mt-1 dark:text-neutral-100"
+                >
+                  {study.industry}
+                </dd>
+              </div>
+              <div>
+                <dt
+                  class="text-caption font-semibold tracking-[0.08em] text-neutral-500 uppercase dark:text-neutral-400"
+                >
+                  Region
+                </dt><dd
+                  class="text-body-sm text-brand-900 mt-1 dark:text-neutral-100"
+                >
+                  {study.region}
+                </dd>
+              </div>
+              <div>
+                <dt
+                  class="text-caption font-semibold tracking-[0.08em] text-neutral-500 uppercase dark:text-neutral-400"
+                >
+                  Client type
+                </dt><dd
+                  class="text-body-sm text-brand-900 mt-1 dark:text-neutral-100"
+                >
+                  {study.client_type}
+                </dd>
+              </div>
+              <div>
+                <dt
+                  class="text-caption font-semibold tracking-[0.08em] text-neutral-500 uppercase dark:text-neutral-400"
+                >
+                  Timeline
+                </dt><dd
+                  class="text-body-sm text-brand-900 mt-1 dark:text-neutral-100"
+                >
+                  {study.timeline}
+                </dd>
+              </div>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-shell py-section-md">
+      <figure
+        class="rounded-panel bg-surface dark:border-brand-800/70 dark:bg-brand-950 overflow-hidden border border-neutral-200"
+      >
+        <img
+          src={study.image.url}
+          alt={study.image.alt}
+          class="h-auto w-full object-cover"
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption
+          class="text-caption dark:border-brand-800/70 border-t border-neutral-200 px-5 py-3 text-neutral-500 dark:text-neutral-400"
+        >
+          Source: {study.image.source}, credit: {study.image.credit}, license: {
+            study.image.license
+          }
+        </figcaption>
+      </figure>
+
+      <div
+        class="mt-10 grid gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]"
+      >
+        <section>
+          <nav aria-label="On-page" class="z-10 mb-6 lg:sticky lg:top-24">
+            <ul
+              class="rounded-card bg-surface/95 dark:border-brand-800/70 dark:bg-brand-950/95 flex flex-wrap gap-3 border border-neutral-200 px-4 py-3 backdrop-blur"
+            >
+              <li>
+                <a
+                  href="#challenge"
+                  class="focus-enterprise text-body-sm hover:text-brand-700 dark:hover:text-accent-500 inline-flex min-h-11 items-center rounded-sm px-2 text-neutral-700 dark:text-neutral-200"
+                  >Challenge</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#approach"
+                  class="focus-enterprise text-body-sm hover:text-brand-700 dark:hover:text-accent-500 inline-flex min-h-11 items-center rounded-sm px-2 text-neutral-700 dark:text-neutral-200"
+                  >Approach</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#outcomes"
+                  class="focus-enterprise text-body-sm hover:text-brand-700 dark:hover:text-accent-500 inline-flex min-h-11 items-center rounded-sm px-2 text-neutral-700 dark:text-neutral-200"
+                  >Outcomes</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#narrative"
+                  class="focus-enterprise text-body-sm hover:text-brand-700 dark:hover:text-accent-500 inline-flex min-h-11 items-center rounded-sm px-2 text-neutral-700 dark:text-neutral-200"
+                  >Narrative</a
+                >
+              </li>
+            </ul>
+          </nav>
+
+          {
+            study.challenge.length > 0 && (
+              <>
+                <h2
+                  id="challenge"
+                  class="font-display text-h3 text-brand-900 leading-[1.08] font-semibold tracking-[-0.02em] dark:text-neutral-100"
+                >
+                  Challenge
+                </h2>
+                <ul class="mt-4 space-y-3">
+                  {study.challenge.map((item) => (
+                    <li class="text-body-sm flex items-start gap-3 leading-[1.7] text-neutral-600 dark:text-neutral-300">
+                      <span
+                        class="bg-accent-500 mt-2 size-1.5 shrink-0 rounded-full"
+                        aria-hidden="true"
+                      />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )
+          }
+
+          {
+            study.approach.length > 0 && (
+              <>
+                <h2
+                  id="approach"
+                  class="font-display text-h3 text-brand-900 mt-10 leading-[1.08] font-semibold tracking-[-0.02em] dark:text-neutral-100"
+                >
+                  Approach
+                </h2>
+                <ol class="text-body-sm mt-4 list-decimal space-y-3 pl-5 leading-[1.7] text-neutral-600 marker:text-neutral-400 dark:text-neutral-300 dark:marker:text-neutral-500">
+                  {study.approach.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ol>
+              </>
+            )
+          }
+
+          {
+            study.outcomes.length > 0 && (
+              <>
+                <h2
+                  id="outcomes"
+                  class="font-display text-h3 text-brand-900 mt-10 leading-[1.08] font-semibold tracking-[-0.02em] dark:text-neutral-100"
+                >
+                  Outcomes
+                </h2>
+                <ul class="mt-4 space-y-3">
+                  {study.outcomes.map((item) => (
+                    <li class="text-body-sm flex items-start gap-3 leading-[1.7] text-neutral-600 dark:text-neutral-300">
+                      <span
+                        class="mt-2 size-1.5 shrink-0 rounded-full bg-teal-500"
+                        aria-hidden="true"
+                      />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )
+          }
+        </section>
+
+        <section>
+          {
+            study.metrics && study.metrics.length > 0 && (
+              <section class="rounded-panel dark:border-brand-800/70 dark:bg-brand-950/60 mb-8 border border-neutral-200 bg-neutral-50 p-6">
+                <h2 class="font-display text-h4 text-brand-900 font-semibold dark:text-neutral-100">
+                  Engagement metrics
+                </h2>
+                <div class="mt-4 grid gap-4 sm:grid-cols-2">
+                  {study.metrics.map((metric) => (
+                    <div class="rounded-card bg-surface dark:border-brand-800/70 dark:bg-brand-950 border border-neutral-200 p-4">
+                      <p class="text-caption font-semibold tracking-[0.08em] text-neutral-500 uppercase dark:text-neutral-400">
+                        {metric.label}
+                      </p>
+                      <p class="text-data font-headline text-brand-900 mt-2 leading-[1.05] dark:text-neutral-100">
+                        {metric.value}
+                      </p>
+                      {metric.description && (
+                        <p class="text-body-sm mt-2 leading-[1.6] text-neutral-600 dark:text-neutral-300">
+                          {metric.description}
+                        </p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )
+          }
+
+          <section
+            class="rounded-panel bg-surface dark:border-brand-800/70 dark:bg-brand-950 border border-neutral-200 p-6"
+          >
+            <h2
+              class="font-display text-h4 text-brand-900 font-semibold dark:text-neutral-100"
+            >
+              Engagement narrative
+            </h2>
+            <article
+              id="narrative"
+              class="prose prose-enterprise text-readable prose-headings:font-display prose-headings:leading-[1.12] prose-headings:font-semibold prose-headings:tracking-[-0.02em] prose-h2:mt-10 prose-h2:mb-4 prose-h3:mt-8 prose-h3:mb-3 prose-p:my-4 prose-p:leading-[1.78] prose-li:my-1.5 prose-li:leading-[1.7] prose-ul:my-5 prose-ol:my-5 prose-blockquote:rounded-card prose-blockquote:border prose-blockquote:border-accent-300/80 prose-blockquote:bg-accent-100/30 prose-blockquote:px-5 prose-blockquote:py-3 prose-blockquote:font-normal prose-blockquote:italic prose-pre:rounded-card prose-pre:px-5 prose-pre:py-4 prose-code:font-mono prose-code:text-[0.92em] prose-a:font-medium prose-a:no-underline prose-a:decoration-accent-500 prose-a:decoration-2 prose-a:underline-offset-2 hover:prose-a:underline dark:prose-invert mt-5 max-w-[72ch]"
+              set:html={narrativeHtml}
+            />
+          </section>
+        </section>
+      </div>
+
+      <section class="mt-10 grid gap-6 lg:grid-cols-3">
+        <article
+          class="rounded-panel bg-surface dark:border-brand-800/70 dark:bg-brand-950 border border-neutral-200 p-5"
+        >
+          <h2
+            class="text-caption font-semibold tracking-[0.1em] text-neutral-500 uppercase dark:text-neutral-400"
+          >
+            Services
+          </h2>
+          <ul
+            class="text-body-sm mt-3 space-y-2 text-neutral-700 dark:text-neutral-200"
+          >
+            {
+              study.services.length > 0 ? (
+                study.services.map((item) => <li>{item}</li>)
+              ) : (
+                <li>Service details available on request.</li>
+              )
+            }
+          </ul>
+        </article>
+        <article
+          class="rounded-panel bg-surface dark:border-brand-800/70 dark:bg-brand-950 border border-neutral-200 p-5"
+        >
+          <h2
+            class="text-caption font-semibold tracking-[0.1em] text-neutral-500 uppercase dark:text-neutral-400"
+          >
+            Solutions
+          </h2>
+          <ul
+            class="text-body-sm mt-3 space-y-2 text-neutral-700 dark:text-neutral-200"
+          >
+            {
+              study.solutions.length > 0 ? (
+                study.solutions.map((item) => <li>{item}</li>)
+              ) : (
+                <li>Solution details available on request.</li>
+              )
+            }
+          </ul>
+        </article>
+        <article
+          class="rounded-panel bg-surface dark:border-brand-800/70 dark:bg-brand-950 border border-neutral-200 p-5"
+        >
+          <h2
+            class="text-caption font-semibold tracking-[0.1em] text-neutral-500 uppercase dark:text-neutral-400"
+          >
+            Buyer personas
+          </h2>
+          <ul
+            class="text-body-sm mt-3 space-y-2 text-neutral-700 dark:text-neutral-200"
+          >
+            {
+              study.buyer_personas.length > 0 ? (
+                study.buyer_personas.map((item) => <li>{item}</li>)
+              ) : (
+                <li>Primary stakeholders vary by engagement.</li>
+              )
+            }
+          </ul>
+        </article>
+      </section>
+
+      {
+        related.length > 0 && (
+          <section class="mt-12">
+            <h2 class="font-display text-h3 text-brand-900 leading-[1.08] font-semibold tracking-[-0.02em] dark:text-neutral-100">
+              Related case studies
+            </h2>
+            <div class="mt-5 grid gap-4 md:grid-cols-3">
+              {related.map((item) => (
+                <a
+                  href={`/case-studies/${item.slug}`}
+                  class="focus-enterprise rounded-card bg-surface hover:border-brand-200 dark:border-brand-800/70 dark:bg-brand-950 dark:hover:border-brand-700 inline-flex min-h-11 flex-col border border-neutral-200 p-4 transition-colors duration-[var(--duration-fast)]"
+                >
+                  <p class="text-caption font-semibold tracking-[0.08em] text-neutral-500 uppercase dark:text-neutral-400">
+                    {item.industry}
+                  </p>
+                  <p class="text-body text-brand-900 mt-2 font-semibold dark:text-neutral-100">
+                    {item.name}
+                  </p>
+                  <p class="text-body-sm mt-2 leading-[1.6] text-neutral-600 dark:text-neutral-300">
+                    {item.excerpt}
+                  </p>
+                </a>
+              ))}
+            </div>
+          </section>
+        )
+      }
+    </section>
+  </main>
+</Base>

@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @source "../pages";
 @source "../components";
@@ -215,6 +216,40 @@ body {
 @utility animate-fade-up-500 {
   animation: fade-up 420ms var(--ease-standard) both;
   animation-delay: 500ms;
+}
+
+@utility prose-enterprise {
+  --tw-prose-body: var(--color-neutral-700);
+  --tw-prose-headings: var(--color-brand-900);
+  --tw-prose-links: var(--color-brand-700);
+  --tw-prose-bold: var(--color-brand-900);
+  --tw-prose-counters: var(--color-neutral-500);
+  --tw-prose-bullets: var(--color-neutral-400);
+  --tw-prose-hr: var(--color-neutral-200);
+  --tw-prose-quotes: var(--color-brand-900);
+  --tw-prose-quote-borders: var(--color-neutral-300);
+  --tw-prose-captions: var(--color-neutral-500);
+  --tw-prose-code: var(--color-brand-900);
+  --tw-prose-pre-code: var(--color-neutral-100);
+  --tw-prose-pre-bg: var(--color-brand-950);
+  --tw-prose-th-borders: var(--color-neutral-300);
+  --tw-prose-td-borders: var(--color-neutral-200);
+
+  --tw-prose-invert-body: var(--color-neutral-300);
+  --tw-prose-invert-headings: var(--color-neutral-100);
+  --tw-prose-invert-links: var(--color-accent-500);
+  --tw-prose-invert-bold: var(--color-neutral-100);
+  --tw-prose-invert-counters: var(--color-neutral-400);
+  --tw-prose-invert-bullets: var(--color-neutral-600);
+  --tw-prose-invert-hr: var(--color-brand-800);
+  --tw-prose-invert-quotes: var(--color-neutral-100);
+  --tw-prose-invert-quote-borders: var(--color-brand-800);
+  --tw-prose-invert-captions: var(--color-neutral-400);
+  --tw-prose-invert-code: var(--color-neutral-100);
+  --tw-prose-invert-pre-code: var(--color-neutral-200);
+  --tw-prose-invert-pre-bg: var(--color-brand-900);
+  --tw-prose-invert-th-borders: var(--color-brand-700);
+  --tw-prose-invert-td-borders: var(--color-brand-800);
 }
 
 #hero-grid-svg #crn-line-h1,
