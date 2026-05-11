@@ -229,21 +229,21 @@ const decisionPaths = [
 
     {/* ===== Sticky Jump Nav ===== */}
     <nav
-      class="dark:border-brand-800/70 dark:bg-brand-950/90 sticky top-[var(--crn-header-height)] z-40 border-b border-neutral-200 bg-white/90 backdrop-blur-[8px] motion-reduce:backdrop-blur-none"
+      class="dark:border-brand-800/70 dark:bg-brand-950/90 lg:sticky lg:top-[var(--crn-header-height)] z-40 border-b border-neutral-200 bg-white/90 backdrop-blur-[8px] motion-reduce:backdrop-blur-none"
       aria-label="Industry cluster navigation"
     >
-      <div class="section-shell flex items-center justify-between gap-4 py-3">
+      <div class="section-shell flex flex-col items-start gap-2 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
         <span
           class="text-caption font-semibold tracking-[0.08em] text-neutral-500 uppercase dark:text-neutral-400"
         >
           Jump to cluster
         </span>
-        <div class="scrollbar-hide flex flex-wrap gap-2 overflow-x-auto">
+        <div class="scrollbar-hide -mx-1 flex w-full gap-2 overflow-x-auto px-1 pb-1 sm:mx-0 sm:w-auto sm:px-0 sm:pb-0">
           {
             sectorClusters.map((cluster) => (
               <a
                 href={`#cluster-${cluster.label.toLowerCase().replace(/\s+/g, "-")}`}
-                class="hover:bg-brand-50 hover:border-brand-200 hover:text-brand-700 dark:border-brand-800/70 dark:bg-brand-950/60 dark:hover:border-brand-700 inline-flex min-h-[44px] items-center rounded-full border border-neutral-200 bg-neutral-50 px-3 py-1.5 text-xs font-medium tracking-[0.02em] whitespace-nowrap text-neutral-700 transition-colors duration-[var(--duration-fast)] dark:hover:text-neutral-100"
+                class="hover:bg-brand-50 hover:border-brand-200 hover:text-brand-700 dark:border-brand-800/70 dark:bg-brand-950/60 dark:hover:border-brand-700 inline-flex min-h-[44px] shrink-0 items-center rounded-full border border-neutral-200 bg-neutral-50 px-3 py-1.5 text-xs font-medium tracking-[0.02em] whitespace-nowrap text-neutral-700 transition-colors duration-[var(--duration-fast)] max-[359px]:px-2.5 max-[359px]:py-1 max-[359px]:text-[0.7rem] max-[359px]:tracking-[0.01em] dark:hover:text-neutral-100"
               >
                 {cluster.title}
               </a>
