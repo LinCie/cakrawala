@@ -51,7 +51,11 @@ try {
     import: "default",
     eager: true,
   });
-  const content = Object.values(raw)[0];
+  const preferredDataPath = Object.keys(raw).find((path) =>
+    path.endsWith("/crn_case_studies.jsonl"),
+  );
+  const fallbackPath = Object.keys(raw).sort()[0];
+  const content = raw[preferredDataPath || fallbackPath || ""];
   if (typeof content === "string") {
     allStudies = content
       .trim()

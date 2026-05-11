@@ -43,7 +43,7 @@ try {
     eager: true,
   });
   const preferredDataPath = Object.keys(raw).find((path) =>
-    path.endsWith("/case-studies.jsonl"),
+    path.endsWith("/crn_case_studies.jsonl"),
   );
   const fallbackPath = Object.keys(raw).sort()[0];
   const content = raw[preferredDataPath || fallbackPath || ""];
