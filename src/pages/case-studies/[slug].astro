@@ -167,18 +167,19 @@ const caseStudySchema = [
       <div class="section-shell py-section-lg">
         <nav aria-label="Breadcrumb" class="mb-8">
           <ol
+            data-animate="hero-breadcrumb"
             class="flex flex-wrap items-center gap-2 text-sm text-neutral-500 dark:text-neutral-400"
           >
             <li>
               <a
-                class="focus-enterprise hover:text-brand-700 dark:hover:text-accent-500 inline-flex min-h-11 items-center"
+                class="hover:text-brand-700 dark:hover:text-accent-500 inline-flex min-h-11 items-center"
                 href="/">Home</a
               >
             </li>
             <li aria-hidden="true">/</li>
             <li>
               <a
-                class="focus-enterprise hover:text-brand-700 dark:hover:text-accent-500 inline-flex min-h-11 items-center"
+                class="hover:text-brand-700 dark:hover:text-accent-500 inline-flex min-h-11 items-center"
                 href="/case-studies">Case Studies</a
               >
             </li>
@@ -188,9 +189,10 @@ const caseStudySchema = [
         </nav>
 
         <div
+          data-animate="hero-grid"
           class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,30rem)] lg:items-start"
         >
-          <div>
+          <div data-animate="hero-copy">
             <p
               class="text-caption text-accent-700 dark:text-accent-500 font-semibold tracking-[0.12em] uppercase"
             >
@@ -209,6 +211,7 @@ const caseStudySchema = [
           </div>
 
           <dl
+            data-animate="hero-meta"
             class="rounded-panel bg-surface shadow-card dark:border-brand-800/70 dark:bg-brand-950 border border-neutral-200 p-6"
           >
             <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
@@ -264,6 +267,7 @@ const caseStudySchema = [
 
     <section class="section-shell py-section-md">
       <figure
+        data-animate="hero-image"
         class="rounded-panel bg-surface dark:border-brand-800/70 dark:bg-brand-950 overflow-hidden border border-neutral-200"
       >
         <img
@@ -285,7 +289,7 @@ const caseStudySchema = [
       <div
         class="mt-10 grid gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]"
       >
-        <section>
+        <section data-animate="content-left">
           <nav aria-label="On-page" class="z-10 mb-6 lg:sticky lg:top-24">
             <ul
               class="rounded-card bg-surface/95 dark:border-brand-800/70 dark:bg-brand-950/95 flex flex-wrap gap-3 border border-neutral-200 px-4 py-3 backdrop-blur"
@@ -293,28 +297,28 @@ const caseStudySchema = [
               <li>
                 <a
                   href="#challenge"
-                  class="focus-enterprise text-body-sm hover:text-brand-700 dark:hover:text-accent-500 inline-flex min-h-11 items-center rounded-sm px-2 text-neutral-700 dark:text-neutral-200"
+                  class="text-body-sm hover:text-brand-700 dark:hover:text-accent-500 inline-flex min-h-11 items-center rounded-sm px-2 text-neutral-700 dark:text-neutral-200"
                   >Challenge</a
                 >
               </li>
               <li>
                 <a
                   href="#approach"
-                  class="focus-enterprise text-body-sm hover:text-brand-700 dark:hover:text-accent-500 inline-flex min-h-11 items-center rounded-sm px-2 text-neutral-700 dark:text-neutral-200"
+                  class="text-body-sm hover:text-brand-700 dark:hover:text-accent-500 inline-flex min-h-11 items-center rounded-sm px-2 text-neutral-700 dark:text-neutral-200"
                   >Approach</a
                 >
               </li>
               <li>
                 <a
                   href="#outcomes"
-                  class="focus-enterprise text-body-sm hover:text-brand-700 dark:hover:text-accent-500 inline-flex min-h-11 items-center rounded-sm px-2 text-neutral-700 dark:text-neutral-200"
+                  class="text-body-sm hover:text-brand-700 dark:hover:text-accent-500 inline-flex min-h-11 items-center rounded-sm px-2 text-neutral-700 dark:text-neutral-200"
                   >Outcomes</a
                 >
               </li>
               <li>
                 <a
                   href="#narrative"
-                  class="focus-enterprise text-body-sm hover:text-brand-700 dark:hover:text-accent-500 inline-flex min-h-11 items-center rounded-sm px-2 text-neutral-700 dark:text-neutral-200"
+                  class="text-body-sm hover:text-brand-700 dark:hover:text-accent-500 inline-flex min-h-11 items-center rounded-sm px-2 text-neutral-700 dark:text-neutral-200"
                   >Narrative</a
                 >
               </li>
@@ -388,16 +392,22 @@ const caseStudySchema = [
           }
         </section>
 
-        <section>
+        <section data-animate="content-right">
           {
             study.metrics && study.metrics.length > 0 && (
-              <section class="rounded-panel dark:border-brand-800/70 dark:bg-brand-950/60 mb-8 border border-neutral-200 bg-neutral-50 p-6">
+              <section
+                data-animate="metrics-shell"
+                class="rounded-panel dark:border-brand-800/70 dark:bg-brand-950/60 mb-8 border border-neutral-200 bg-neutral-50 p-6"
+              >
                 <h2 class="font-display text-h4 text-brand-900 font-semibold dark:text-neutral-100">
                   Engagement metrics
                 </h2>
                 <div class="mt-4 grid gap-4 sm:grid-cols-2">
                   {study.metrics.map((metric) => (
-                    <div class="rounded-card bg-surface dark:border-brand-800/70 dark:bg-brand-950 border border-neutral-200 p-4">
+                    <div
+                      data-animate="metric-item"
+                      class="rounded-card bg-surface dark:border-brand-800/70 dark:bg-brand-950 border border-neutral-200 p-4"
+                    >
                       <p class="text-caption font-semibold tracking-[0.08em] text-neutral-500 uppercase dark:text-neutral-400">
                         {metric.label}
                       </p>
@@ -433,7 +443,10 @@ const caseStudySchema = [
         </section>
       </div>
 
-      <section class="mt-10 grid gap-6 lg:grid-cols-3">
+      <section
+        data-animate="taxonomy-grid"
+        class="mt-10 grid gap-6 lg:grid-cols-3"
+      >
         <article
           class="rounded-panel bg-surface dark:border-brand-800/70 dark:bg-brand-950 border border-neutral-200 p-5"
         >
@@ -498,15 +511,16 @@ const caseStudySchema = [
 
       {
         related.length > 0 && (
-          <section class="mt-12">
+          <section data-animate="related-shell" class="mt-12">
             <h2 class="font-display text-h3 text-brand-900 leading-[1.08] font-semibold tracking-[-0.02em] dark:text-neutral-100">
               Related case studies
             </h2>
             <div class="mt-5 grid gap-4 md:grid-cols-3">
               {related.map((item) => (
                 <a
+                  data-animate="related-item"
                   href={`/case-studies/${item.slug}`}
-                  class="focus-enterprise rounded-card bg-surface hover:border-brand-200 dark:border-brand-800/70 dark:bg-brand-950 dark:hover:border-brand-700 inline-flex min-h-11 flex-col border border-neutral-200 p-4 transition-colors duration-[var(--duration-fast)]"
+                  class="rounded-card bg-surface hover:border-brand-200 dark:border-brand-800/70 dark:bg-brand-950 dark:hover:border-brand-700 border border-neutral-200 p-4 transition-colors duration-[var(--duration-fast)]"
                 >
                   <p class="text-caption font-semibold tracking-[0.08em] text-neutral-500 uppercase dark:text-neutral-400">
                     {item.industry}
@@ -526,3 +540,166 @@ const caseStudySchema = [
     </section>
   </main>
 </Base>
+
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  const selectors =
+    '[data-animate="hero-breadcrumb"], [data-animate="hero-copy"], [data-animate="hero-meta"], [data-animate="hero-image"], [data-animate="content-left"], [data-animate="content-right"], [data-animate="metrics-shell"], [data-animate="metric-item"], [data-animate="taxonomy-grid"], [data-animate="related-shell"], [data-animate="related-item"]';
+
+  const revealAll = () => {
+    document.querySelectorAll<HTMLElement>(selectors).forEach((el) => {
+      el.style.opacity = "1";
+      el.style.transform = "none";
+    });
+  };
+
+  const initCaseStudyEntranceAnimation = () => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      revealAll();
+      return;
+    }
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.fromTo(
+      '[data-animate="hero-breadcrumb"]',
+      { y: 16, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.42,
+        ease: "power3.out",
+        clearProps: "transform,opacity",
+      },
+    );
+
+    gsap.fromTo(
+      '[data-animate="hero-copy"]',
+      { y: 20, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.5,
+        delay: 0.08,
+        ease: "power3.out",
+        clearProps: "transform,opacity",
+      },
+    );
+
+    gsap.fromTo(
+      '[data-animate="hero-meta"]',
+      { y: 18, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.46,
+        delay: 0.16,
+        ease: "power3.out",
+        clearProps: "transform,opacity",
+      },
+    );
+
+    gsap.fromTo(
+      '[data-animate="hero-image"]',
+      { y: 24, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.52,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: '[data-animate="hero-image"]',
+          start: "top 86%",
+          once: true,
+        },
+        clearProps: "transform,opacity",
+      },
+    );
+
+    [
+      '[data-animate="content-left"]',
+      '[data-animate="content-right"]',
+      '[data-animate="metrics-shell"]',
+      '[data-animate="taxonomy-grid"]',
+      '[data-animate="related-shell"]',
+    ].forEach((selector) => {
+      if (!document.querySelector(selector)) {
+        return;
+      }
+      gsap.fromTo(
+        selector,
+        { y: 22, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.48,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: selector,
+            start: "top 88%",
+            once: true,
+          },
+          clearProps: "transform,opacity",
+        },
+      );
+    });
+
+    gsap.utils
+      .toArray<HTMLElement>('[data-animate="metric-item"]')
+      .forEach((item, index) => {
+        gsap.fromTo(
+          item,
+          { y: 18, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.42,
+            delay: index * 0.08,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: item,
+              start: "top 90%",
+              once: true,
+            },
+            clearProps: "transform,opacity",
+          },
+        );
+      });
+
+    gsap.utils
+      .toArray<HTMLElement>('[data-animate="related-item"]')
+      .forEach((item, index) => {
+        gsap.fromTo(
+          item,
+          { y: 20, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.44,
+            delay: index * 0.1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: item,
+              start: "top 92%",
+              once: true,
+            },
+            clearProps: "transform,opacity",
+          },
+        );
+      });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener(
+      "DOMContentLoaded",
+      initCaseStudyEntranceAnimation,
+      {
+        once: true,
+      },
+    );
+  } else {
+    initCaseStudyEntranceAnimation();
+  }
+</script>

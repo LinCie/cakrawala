@@ -126,19 +126,22 @@ const caseStudiesSchema = [
     <section
       class="dark:border-brand-800/70 dark:bg-surface-inverse border-b border-neutral-200 bg-neutral-50"
     >
-      <div class="section-shell py-section-lg">
+      <div class="section-shell py-section-lg" data-animate="hero-shell">
         <div class="max-w-[var(--container-prose)]">
           <p
+            data-animate="hero-eyebrow"
             class="text-accent-700 dark:text-accent-500 text-caption font-semibold tracking-[0.12em] uppercase"
           >
             Client Evidence
           </p>
           <h1
+            data-animate="hero-title"
             class="font-display text-h1 text-brand-900 mt-4 leading-[1] font-semibold tracking-[-0.035em] dark:text-neutral-100"
           >
             Governed intelligence, measurable outcomes.
           </h1>
           <p
+            data-animate="hero-copy"
             class="text-body-lg text-readable mt-5 leading-[1.7] text-neutral-600 dark:text-neutral-300"
           >
             Each engagement below shows the problem, the intervention, and the
@@ -147,6 +150,7 @@ const caseStudiesSchema = [
             programs across regulated Indonesian enterprises.
           </p>
           <p
+            data-animate="hero-note"
             class="text-body-sm mt-4 max-w-[58ch] leading-[1.65] text-neutral-500 dark:text-neutral-400"
           >
             <em
@@ -161,6 +165,7 @@ const caseStudiesSchema = [
 
     <section class="section-shell py-section-md" id="case-studies-archive">
       <div
+        data-animate="filter-shell"
         class="rounded-panel dark:border-brand-800/70 dark:bg-brand-950/60 lg:rounded-t-panel lg:bg-surface lg:shadow-elevated dark:lg:border-brand-800/70 dark:lg:bg-brand-950 -mx-1.5 mb-8 border border-neutral-200 bg-neutral-50 p-5 md:mb-10 md:p-6 lg:sticky lg:top-[var(--crn-header-height)] lg:z-40 lg:mb-0 lg:rounded-b-none lg:border-x-0 lg:border-t-0 lg:border-b lg:border-neutral-200 lg:p-6"
       >
         <div class="flex items-start justify-between gap-4 md:items-center">
@@ -353,6 +358,7 @@ const caseStudiesSchema = [
 
             return (
               <article
+                data-animate="study-item"
                 data-study-item
                 data-industry={study.industry}
                 data-region={study.region}
@@ -787,5 +793,85 @@ const caseStudiesSchema = [
           "We could not load case study data. Please refresh or try again later.";
       }
     }
+  }
+</script>
+
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  const selectors =
+    '[data-animate="hero-eyebrow"], [data-animate="hero-title"], [data-animate="hero-copy"], [data-animate="hero-note"], [data-animate="filter-shell"], [data-animate="study-item"]';
+
+  const revealAll = () => {
+    document.querySelectorAll<HTMLElement>(selectors).forEach((el) => {
+      el.style.opacity = "1";
+      el.style.transform = "none";
+    });
+  };
+
+  const initEntranceAnimation = () => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      revealAll();
+      return;
+    }
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.fromTo(
+      [
+        '[data-animate="hero-eyebrow"]',
+        '[data-animate="hero-title"]',
+        '[data-animate="hero-copy"]',
+        '[data-animate="hero-note"]',
+      ],
+      { y: 22, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.5,
+        ease: "power3.out",
+        stagger: 0.12,
+        clearProps: "transform,opacity",
+      },
+    );
+
+    gsap.fromTo(
+      '[data-animate="filter-shell"]',
+      { y: 18, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.46,
+        delay: 0.18,
+        ease: "power3.out",
+        clearProps: "transform,opacity",
+      },
+    );
+
+    gsap.utils
+      .toArray<HTMLElement>('[data-animate="study-item"]')
+      .forEach((item) => {
+        gsap.fromTo(
+          item,
+          { y: 24, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.48,
+            ease: "power3.out",
+            scrollTrigger: { trigger: item, start: "top 88%", once: true },
+            clearProps: "transform,opacity",
+          },
+        );
+      });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initEntranceAnimation, {
+      once: true,
+    });
+  } else {
+    initEntranceAnimation();
   }
 </script>
